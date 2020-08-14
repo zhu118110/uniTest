@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/detail/detail",
+    "pages/my/my",
+    "pages/my/changeTitle/changeTitle",
+    "pages/paihang/paihang"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "人人视频",
+    "navigationBarBackgroundColor": "#2a91d5",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#a1a1a1",
+    "selectedColor": "#2a91d5",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/paihang/paihang",
+        "text": "排行"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {},
+  "usingComponents": {},
+  "sitemapLocation": "sitemap56.json"
+}

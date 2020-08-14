@@ -1,0 +1,48 @@
+
+.container.data-v-f9e41496{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+}
+.list-box.data-v-f9e41496{
+	width: 100%;
+	
+	display: -webkit-box;
+	
+	display: -webkit-flex;
+	
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	-webkit-flex-wrap: wrap;
+	        flex-wrap: wrap;
+	box-sizing: border-box;
+}
+/* 解决 space-between 换行后子元素排版问题*/
+.list-box.data-v-f9e41496:after{
+	width: 32%;
+	content: "";
+}
+.list-item.data-v-f9e41496{
+	margin-top: 20rpx;
+	width: 32%;
+	height:auto;
+	text-align: center;
+	font-size: 28rpx;
+	border-radius: 10rpx;
+	overflow: hidden;
+}
+.list-box .list-item image.data-v-f9e41496{
+	width: 100%;
+	height: 270rpx;
+	display: block;
+}
+.list-box .list-item .title.data-v-f9e41496{
+	margin-top: 10rpx;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	line-clamp: 1;
+}
+

@@ -1,0 +1,106 @@
+
+.box.data-v-0be17cc6{
+	width:100%;
+	height: 100%;
+	box-sizing:border-box;
+}
+.header.data-v-0be17cc6{
+	
+	padding: 30rpx 0;
+}
+/* 头像样式 */
+.header .login.data-v-0be17cc6{
+	text-align: center;
+	display:-webkit-box;
+	display:-webkit-flex;
+	display:flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+}
+.header .login .head_img.data-v-0be17cc6{
+	width: 150rpx;
+	/* max-width: 180rpx; */
+	height: 150rpx;
+	/* max-height: 80%; */
+	border-radius: 50%;
+	overflow: hidden;
+	text-align: center;
+	font-size: 0;
+	display: inline-block;
+}
+.header .login .head_img image.data-v-0be17cc6{
+	width: 100%;
+	height: 100%;
+}
+.header .login>view.data-v-0be17cc6:last-child{
+	text-align: center;
+	color: #fff;
+	padding: 0rpx 80rpx;
+	border-radius: 40rpx;
+	background-color: #55aaff;
+	margin-top: 10rpx;
+	height:60rpx;
+	line-height: 60rpx;
+	font-size: 30rpx;
+}
+.header .login view button.data-v-0be17cc6{
+	line-height: none !important;
+	font-size: 30rpx;
+	color: #fff;
+	border: none;
+}
+
+/* 头部4个导航 */
+.headnav.data-v-0be17cc6{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-justify-content: space-around;
+	        justify-content: space-around;
+	
+	width: 90%;
+	margin: 40rpx auto 0;
+}
+.headnav .navList.data-v-0be17cc6{
+	text-align: center;
+	color: #fff;
+}
+.headnav .navList .navIcon.data-v-0be17cc6{
+	font-size: 50rpx;
+}
+.headnav .navList .nav-Item.data-v-0be17cc6{
+	font-size: 32rpx;
+}
+/* 6个list */
+.listArea.data-v-0be17cc6{
+	width: 100%;
+	height: 100%;
+}
+.listArea .list.data-v-0be17cc6{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	padding: 0 20rpx;
+	margin: 0 auto;
+}
+.listArea .list .list-item.data-v-0be17cc6{
+	padding: 20rpx;
+	border-bottom: 1rpx solid #f1f1f1;
+}
+.listArea .list .list-item .listIcon.data-v-0be17cc6{
+	font-size: 32rpx;
+	vertical-align: middle;
+}
+.listText.data-v-0be17cc6{
+	margin-left: 20rpx;
+	vertical-align: middle;
+}
+

@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "主页",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "jingxuan": "/pages/index/indexModule/jingxuan",
+    "juji": "/pages/index/indexModule/juji",
+    "dianying": "/pages/index/indexModule/dianying",
+    "dongman": "/pages/index/indexModule/dongman",
+    "zongyi": "/pages/index/indexModule/zongyi"
+  }
+}
