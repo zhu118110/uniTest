@@ -1,0 +1,33 @@
+
+.container.data-v-57280228{
+	width: 100%;
+	font-size: 28rpx;
+	box-sizing: border-box;
+}
+.scrollView.data-v-57280228{
+	width: 100%;
+}
+.scroll_x.data-v-57280228{
+	white-space: nowrap;
+	width: 100%;
+	box-sizing: border-box;
+	border-bottom: 1rpx solid #f1f1f1;
+}
+.nav-item.data-v-57280228{
+	width: 20%;  
+	height: 80rpx;
+	line-height: 80rpx;
+	text-align: center;
+	display: inline-block;
+}
+.nav-item.nav-item-active.data-v-57280228{
+	color: red;
+	border-bottom: 2rpx solid red;
+}
+/* h5中隐藏导航滚动条，但依旧具备可以滚动的功能 */
+
+
+
+
+
+

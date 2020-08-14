@@ -1,0 +1,30 @@
+
+view{
+	box-sizing: border-box;
+}
+.colorBox {
+	width: 100%;
+	height: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	-webkit-flex-wrap: wrap;
+	        flex-wrap: wrap;
+}
+.colorBox .colorList{
+	width: 50%;
+	text-align: center;
+	margin: 20rpx 0;
+}
+.colorBox .colorList>view{
+	font-size: 32rpx;
+}
+.colorBox .colorList>view:first-child{
+	width: 60%;
+	height: 70rpx;
+	display: inline-block;
+}
+
