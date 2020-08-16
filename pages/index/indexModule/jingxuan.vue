@@ -78,7 +78,7 @@
 		},
 		created() {
 			
-			this.getAllMovie()
+			// this.getAllMovie()
 		
 		},
 
@@ -160,15 +160,31 @@
 	/* 导航 */
 	.navList{
 		width: 100%;
-		
+		margin: 40rpx 0;
 		display: flex;
+		padding: 0 10rpx;
 		justify-content: space-between;
 	}
 	.navList .navItem{
 		text-align: center;
-		width: 25%;
+		
 	}
 	.navItem .iconfont{
-		font-size: 50rpx;
+		font-size: 60rpx;
+	}
+	.navItem .icon-dianshi{
+		color: #0086B3;
+	}
+	.navItem .icon-dianying{
+		color: #aa0000;
+	}
+	.navItem .icon-liebiaodaohang_zongyi{
+		color: #ff5500;
+	}
+	.navItem .icon-donghuapian{
+		color: #007AFF;
+	}
+	.navItem .icon-zhuanti{
+		color: #aa00ff;
 	}
 </style>

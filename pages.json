@@ -39,6 +39,9 @@
 			}
 		}
 	],
+	"easycom": {
+		"^u-(.*)": "@/components/uview-ui/components/u-$1/u-$1.vue"
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "人人视频",

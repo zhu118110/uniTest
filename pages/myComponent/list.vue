@@ -2,7 +2,7 @@
 	<!-- 电影列表展示 -->
 	<view class="container">
 		<view class="list-box">
-			<view class="list-item" v-for="(item,index) in movieData" @click="toDetail(index)">
+			<view class="list-item" v-for="(item,index) in dataList" @click="toDetail(index)">
 				<view >
 					<image :src="item.poster"></image>
 				</view>
@@ -25,7 +25,7 @@
 			return {
 				dataList:[{
 					type:"电影",
-					title:"复仇者联盟一",
+					title:"港囧",
 					grade:8.5,//评分,
 					poster:"/static/bd1.jpg"
 				},{
@@ -40,7 +40,7 @@
 					poster:"/static/bd1.jpg"
 				},{
 					type:"电影",
-					title:"复仇者联盟二",
+					title:"心花路放",
 					grade:8.0,//评分
 					poster:"/static/bd1.jpg"
 				}]
@@ -51,7 +51,7 @@
 			toDetail(index){
 				let _this=this;
 				uni.navigateTo({
-					url:"../detail/detail?name="+_this.movieData[index].title+"&cover="+_this.movieData[index].poster,
+					url:"../detail/detail?name="+_this.dataList[index].title+"&cover="+_this.dataList[index].poster,
 				})
 			}
 		}

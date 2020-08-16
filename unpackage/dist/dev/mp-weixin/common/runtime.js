@@ -104,11 +104,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"pages/index/indexModule/jingxuan":1,"components/hx-navbar/hx-navbar":1,"pages/myComponent/list":1,"components/uni-icons/uni-icons":1};
+/******/ 		var cssChunks = {"pages/index/indexModule/jingxuan":1,"components/uview-ui/components/u-collapse-item/u-collapse-item":1,"components/uview-ui/components/u-collapse/u-collapse":1,"components/uview-ui/components/u-loading/u-loading":1,"components/uview-ui/components/u-mask/u-mask":1,"components/yy-video-player/yy-video-player":1,"pages/myComponent/list":1,"components/uview-ui/components/u-icon/u-icon":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"pages/index/indexModule/jingxuan":"pages/index/indexModule/jingxuan","pages/index/indexModule/dianying":"pages/index/indexModule/dianying","pages/index/indexModule/dongman":"pages/index/indexModule/dongman","pages/index/indexModule/juji":"pages/index/indexModule/juji","pages/index/indexModule/zongyi":"pages/index/indexModule/zongyi","components/hx-navbar/hx-navbar":"components/hx-navbar/hx-navbar","pages/myComponent/list":"pages/myComponent/list","components/uni-icons/uni-icons":"components/uni-icons/uni-icons"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"pages/index/indexModule/jingxuan":"pages/index/indexModule/jingxuan","pages/index/indexModule/dianying":"pages/index/indexModule/dianying","pages/index/indexModule/dongman":"pages/index/indexModule/dongman","pages/index/indexModule/juji":"pages/index/indexModule/juji","pages/index/indexModule/zongyi":"pages/index/indexModule/zongyi","components/uview-ui/components/u-collapse-item/u-collapse-item":"components/uview-ui/components/u-collapse-item/u-collapse-item","components/uview-ui/components/u-collapse/u-collapse":"components/uview-ui/components/u-collapse/u-collapse","components/uview-ui/components/u-loading/u-loading":"components/uview-ui/components/u-loading/u-loading","components/uview-ui/components/u-mask/u-mask":"components/uview-ui/components/u-mask/u-mask","components/yy-video-player/yy-video-player":"components/yy-video-player/yy-video-player","pages/myComponent/list":"pages/myComponent/list","components/uview-ui/components/u-icon/u-icon":"components/uview-ui/components/u-icon/u-icon"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

@@ -17,8 +17,9 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	@import url("font/font.css");
+	@import "./components/uview-ui/index";
 	.status_bar {
 	      height: var(--status-bar-height);
 	      width: 100%;

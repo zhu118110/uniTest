@@ -14,24 +14,6 @@
 		<view class="swiper">
 			
 			<swiper @change="touch" :current="scroll_index" duration="300" :style="{'height':siwperHeight+'px'}">
-				<!-- <swiper-item v-for="(i,index) in scrollTitle" :key="index"> -->
-					<!-- #ifndef MP-WEIXIN -->
-						<!-- <keep-alive>
-							<view :is="currentComponent"></view>
-						</keep-alive> -->
-						
-					<!-- #endif -->
-					
-					<!-- #ifdef MP-WEIXIN -->
-						<!-- <jingxuan v-if="currentComponent == 'jingxuan'"></jingxuan>
-						<juji v-if="currentComponent == 'juji'"></juji>
-						<dianying v-if="currentComponent == 'dianying'"></dianying>
-						<dongman v-if="currentComponent == 'dongman'"></dongman>
-						<zongyi v-if="currentComponent == 'zongyi'"></zongyi> -->
-					<!-- #endif -->
-					
-				<!-- </swiper-item> -->
-				
 				<swiper-item>
 					<keep-alive>
 						<jingxuan class="component" v-if="currentComponent == 'jingxuan'"></jingxuan>
@@ -57,6 +39,7 @@
 						<zongyi class="component" v-if="currentComponent == 'zongyi'"></zongyi>
 					</keep-alive>
 				</swiper-item>
+				
 			</swiper>
 		</view>
 	</view>

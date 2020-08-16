@@ -5,7 +5,8 @@ import store from "./store/index.js"
 import './font/font.css'
 Vue.config.productionTip = false
 
-
+import uView from "./components/uview-ui";
+Vue.use(uView);
 // 从本地获取主题色
 Vue.prototype.$getMainColor=function(){
 	let mainColor="";

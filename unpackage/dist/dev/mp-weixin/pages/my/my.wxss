@@ -99,8 +99,38 @@
 	font-size: 32rpx;
 	vertical-align: middle;
 }
+.listArea .list .list-item .icon-zhuti.data-v-0be17cc6{
+	color: #007AFF;
+}
+.listArea .list .list-item .icon-tubiao-.data-v-0be17cc6{
+	color: #ff5500;
+}
+.listArea .list .list-item .icon-yiliaohangyedeICON-.data-v-0be17cc6{
+	color: #aa0000;
+}
+.listArea .list .list-item .icon-haopingganxie.data-v-0be17cc6{
+	color: #aaaa00;
+}
+.listArea .list .list-item .icon-fankui.data-v-0be17cc6{
+	color: #aa00ff;
+}
+.listArea .list .list-item .icon-12.data-v-0be17cc6{
+	color: #ff00ff;
+}
 .listText.data-v-0be17cc6{
 	margin-left: 20rpx;
 	vertical-align: middle;
+}
+.listArea .list button.data-v-0be17cc6{
+	font-size: 28rpx;
+	background-color: inherit;
+	text-align: left;
+	line-height: none;
+	border: none;
+	padding: 0;
+}
+.listArea .list button.data-v-0be17cc6::after{
+	width: 0;
+	height: 0;
 }
 

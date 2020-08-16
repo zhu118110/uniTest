@@ -28,21 +28,34 @@ view.data-v-d7619eee,image.data-v-d7619eee,swiper.data-v-d7619eee,swiper-item.da
 /* 导航 */
 .navList.data-v-d7619eee{
 	width: 100%;
-	
+	margin: 40rpx 0;
 	display: -webkit-box;
-	
 	display: -webkit-flex;
-	
 	display: flex;
+	padding: 0 10rpx;
 	-webkit-box-pack: justify;
 	-webkit-justify-content: space-between;
 	        justify-content: space-between;
 }
 .navList .navItem.data-v-d7619eee{
 	text-align: center;
-	width: 25%;
 }
 .navItem .iconfont.data-v-d7619eee{
-	font-size: 50rpx;
+	font-size: 60rpx;
+}
+.navItem .icon-dianshi.data-v-d7619eee{
+	color: #0086B3;
+}
+.navItem .icon-dianying.data-v-d7619eee{
+	color: #aa0000;
+}
+.navItem .icon-liebiaodaohang_zongyi.data-v-d7619eee{
+	color: #ff5500;
+}
+.navItem .icon-donghuapian.data-v-d7619eee{
+	color: #007AFF;
+}
+.navItem .icon-zhuanti.data-v-d7619eee{
+	color: #aa00ff;
 }
 
