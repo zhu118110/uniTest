@@ -2,27 +2,43 @@
 	<!-- 电影列表展示 -->
 	<view class="container">
 		<view class="list-box">
-			<view class="list-item" v-for="(item,index) in dataList" @click="toDetail(index)">
+			<view class="list-item" v-for="(item,index) in movieData" @click="toDetail(index)">
 				<view >
-					<image :src="item.poster"></image>
+					<u-image src="/static/bd1.jpg" height='270rpx' width="100%">
+						<u-loading slot="loading"></u-loading>
+						<view slot="error" style="font-size: 24rpx;">加载失败</view>
+					</u-image>
 				</view>
 				<view class="title">
-					{{item.title}}
+					{{item.nm}}
 				</view>
+				<view class="rate">
+					<uniRate :max="5" readonly :allowHalf="true" :value="item.sc/2" size="14"></uniRate>
+					<text style="color: #ccc;font-size: 12px;">
+						{{item.sc}}
+					</text>
+				</view>
+					
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import uniRate from "@/components/uni-rate/uni-rate.vue"
 	export default{
 		props:{
 			movieData:{
 				type:Array
 			}
 		},
+		components:{
+			uniRate
+		},
 		data(){
+			
 			return {
+				
 				dataList:[{
 					type:"电影",
 					title:"港囧",
@@ -43,15 +59,22 @@
 					title:"心花路放",
 					grade:8.0,//评分
 					poster:"/static/bd1.jpg"
+				},{
+					type:"电影",
+					title:"上海滩",
+					grade:8.0,//评分
+					poster:"/static/bd1.jpg"
 				}]
 			}
 		},
+		
 		methods:{
 			// 携带点击的电影名称跳转到详情页
 			toDetail(index){
 				let _this=this;
 				uni.navigateTo({
-					url:"../detail/detail?name="+_this.dataList[index].title+"&cover="+_this.dataList[index].poster,
+					url:"../detail/detail?name="+_this.movieData[index].nm+"&cover="+_this.movieData[index].img,
+					// url:"../detail/detail?id="+_this.movieData[index].id
 				})
 			}
 		}
@@ -90,7 +113,7 @@
 	
 	.list-box .list-item image{
 		width: 100%;
-		height: 270rpx;
+		
 		display: block;
 	}
 	.list-box .list-item .title{
@@ -99,5 +122,11 @@
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		line-clamp: 1;
+	}
+	.list-box .list-item .rate{
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+		padding: 0 10rpx;
 	}
 </style>

@@ -129,10 +129,16 @@
 						summary:"我在追美剧,你也快来吧",
 						href:"http://www.baidu.com",
 						success() {
-							console.log("分享成功")
+							uni.showToast({
+								title:"分享成功",
+								icon:"none"
+							})
 						},
 						fail(err){
-							console.log("分享失败"+err)
+							uni.showToast({
+								title:"分享失败"+err,
+								icon:"none"
+							})
 						}
 					})
 				// #endif
@@ -142,7 +148,7 @@
 			// 微信端点击右上角调用分享功能
 			onShareAppMessage(res){
 				if(res){
-					console.log(res)
+					
 				};
 				return {
 					title:"我在小程序追美剧,你也快来吧",
@@ -165,7 +171,7 @@
 					provider: 'weixin',
 					auth_user:"auth_user",
 					success(res) {
-						console.log(res)
+						
 						uni.getUserInfo({
 							lang:"zh_CN",
 							provider:"weixin",
@@ -175,19 +181,29 @@
 								
 							},
 							fail(err) {
-								console.log("授权失败"+err)
+								uni.showToast({
+									title:"获取用户授权失败"+err,
+									icon:"none"
+								})
+							
 							}
 						})
 						
 					},
 					fail(err) {
-						console.log(err)
+						uni.showToast({
+							title:"登录失败"+err,
+							icon:"none"
+						})
 					}
 				})
 			},
 			// app\h5登录
 			appLogin(){
-				console.log(111)
+				uni.showToast({
+					title:"登录",
+					icon:"none"
+				})
 			}
 		},
 		watch:{
@@ -243,13 +259,13 @@
 		margin-top: 10rpx;
 		height:60rpx;
 		line-height: 60rpx;
-		font-size: 30rpx;
+		font-size: 16px;
 		
 	}
 	/* #ifdef MP-WEIXIN */
 	.header .login view button{
 		line-height: none !important;
-		font-size: 30rpx;
+		font-size: 14px;
 		color: #fff;
 		border: none;
 	}
@@ -268,10 +284,10 @@
 		
 	}
 	.headnav .navList .navIcon{
-		font-size: 50rpx;
+		font-size: 25px;
 	}
 	.headnav .navList .nav-Item{
-		font-size: 32rpx;
+		font-size: 14px;
 	}
 	
 	
@@ -294,7 +310,7 @@
 		border-bottom: 1rpx solid #f1f1f1;
 	}
 	.listArea .list .list-item .listIcon{
-		font-size: 32rpx;
+		font-size: 16rx;
 		vertical-align: middle;
 	}
 	.listArea .list .list-item .icon-zhuti{
@@ -320,7 +336,7 @@
 		vertical-align: middle;
 	}
 	.listArea .list button{
-		font-size: 28rpx;
+		font-size: 14px;
 		background-color: inherit;
 		text-align: left;
 		line-height: none;

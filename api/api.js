@@ -3,4 +3,5 @@ const apiKesy={
 	detailKey:"5a375a81699f486ca62db763f201656e"   //视频详情接口key
 }
 
+
 export default apiKesy;

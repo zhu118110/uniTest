@@ -20,6 +20,9 @@
 <style lang="scss">
 	@import url("font/font.css");
 	@import "./components/uview-ui/index";
+	view,text,image{
+		box-sizing: border-box;
+	}
 	.status_bar {
 	      height: var(--status-bar-height);
 	      width: 100%;

@@ -9,7 +9,7 @@
 			:danmu-list="danmuList"
 			:enable-danmu="false"
 			:danmu-btn="false"
-			:style="{ width: screenWidth }"
+			style="width:100%"
 			:enable-play-gesture="true"
 			:poster="poster"
 			@fullscreenchange="setFullScreenStatus"
@@ -27,7 +27,7 @@
 				<text v-else class="process-text-horizontal">{{ progressValue }}%</text>
 			</view>
 		</video>
-		<div class="video-process-bar" :style="{'background-color':processBarColor,width:processBarWidth}"></div>
+		<div class="video-process-bar" :style="{'background-color':processBarColor,width:screenWidth}"></div>
 	</div>
 </template>
 <script>

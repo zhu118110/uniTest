@@ -2,38 +2,87 @@
 	<view class="container">
 		
 		<u-mask :show="showLoad" :mask-click-able="false" :custom-style="{background: 'rgba(255, 255, 255, 0.5)'}">
-			<view>
+			
 				<u-loading :show="showLoad" :color="tabbarColor"></u-loading>
-			</view>
+			
 		</u-mask>
-		<view class="status_bar" :style="{'background-color':tabbarColor}"></view>
+		<u-navbar :is-fixed="false" title="人人视频" :background="tabbarColor"></u-navbar>
+		
+		<!-- 视频播放区域 -->
 		<view class="videoArea">
-			<videoPlayer 
-				url="http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/28742df34564972819219071568/v.f210.m3u8" 
-				poster="/static/bd1.jpg" 
-				muted 
-				:show-back-btn="true" 
-				:auto-play="false"
+			<video 
+				id="myVideo"
+				style="width: 100%;"
+				src="http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/28742df34564972819219071568/v.f210.m3u8" 
+				poster="/static/bd1.jpg"
+				:title="name"
+				controls
+				
+				:danmu-list="danmuList"
+				:enable-danmu="false"
+				:enable-play-gesture="true"
+				:initial-time="20"
+				@pause="pause"
 				@play="play"
-				style="width: 100%;">
-			</videoPlayer>
+			>
+				<cover-view v-if="paused" class="video-cover-view" @click="hideCover">
+					<cover-view class="iconfont" :class="[paused?'icon-zanting':'icon-icon_bofang']"></cover-view>
+				</cover-view>
+				
+			</video>
+			
 		</view>
+		
+		<!-- 影片详情 -->
 		<view class="detail">
-			<u-collapse >
-				<view>
-					{{ name }} / {{ area }}
-				</view>
-				<u-collapse-item title="简介" >
-					<view>导演:{{ dir }}</view>
-					<view>类型:{{ tag }}</view>
+			<u-collapse style="width: 100%;">
+				<u-collapse-item :title="name" >
+					<view>
+						<view>导演:{{ dir }}</view>
+						<view>类型:{{ tag }}</view>
+						<view style="text-indent: 1cm;">{{ desc }}</view>	
+					</view>
 					
-					{{ desc }}
 				</u-collapse-item>
 			</u-collapse>
 		</view>
 		
-		<view>
-			123123123123
+		<!-- 收藏点赞区域 -->
+		<view class="collectArea">
+			<view>
+				<text class="iconfont icon-dianzan"></text>
+				<text>25</text>
+			</view>	
+			<view >
+				<text class="iconfont icon-caishixin-"></text>
+				<text>10</text>
+			</view>	
+			<view>
+				<text class="iconfont icon-shoucang2"></text>
+				<text>收藏</text>
+			</view>
+			<view>
+				<text class="iconfont icon-tubiao-"></text>
+				<text>分享</text>
+			</view>	
+		</view>
+		
+		<u-gap height="20" bg-color="#f8f8f8"></u-gap>
+		
+		<!-- 猜你喜欢 -->
+		
+		<!-- 底部评论 -->
+		<view class="footer">
+			<view class="inp">
+				<u-search 
+					search-icon="order"
+					placeholder="评论" 
+					v-model="comment"
+					action-text="发表"
+					:action-style="{color:tabbarColor.backgroundColor}"
+					>
+				</u-search>
+			</view>
 		</view>
 	</view>	
 </template>
@@ -44,60 +93,100 @@
 	export default{
 		data(){
 			return{
-				tabbarColor:"",
-				name:"",
-				coverImg:"",
-				danmuList:[],
-				desc:"暂无简介",
-				area:"未知", 
-				dir:"未知",
-				tag:"无",
-				showLoad:true
+				id:"",
+				tabbarColor:{
+					backgroundColor:"#2a91d5"
+				},
+				paused:true,   //视频暂停是否显示的cover-view
+				name:"默认标题",   //电影名称
+				coverImg:"",   //封面图片
+				desc:"默认简介默认简介默认简介默认简介默认简介默认简介默认简介",  //电影简介
+				area:"未知",   //电影地区
+				dir:"未知",  //导演 
+				tag:"无",   //电影标签
+				showLoad:true,
+				danmuList:[{  //弹幕列表
+                    text: '这说的是什么',
+                    color: '#ff0000',
+                    time: 1
+                },{
+                    text: '前面的弹幕等等我',
+                    color: '#ff00ff',
+                    time: 3
+                },
+				{
+				    text: '暂停看我啥颜色',
+				    color: '#fff',
+				    time: 6
+				}],
+				comment:"",   //评论
+                
 			}
+		},
+		onReady() {
+			this.videoText=uni.createVideoContext("myVideo");
+			
 		},
 		components:{
 			"videoPlayer":yyVideoPlayer,
 		},
 		onLoad(options) {
+			// this.id=options.id;
 			this.name=options.name;
 			this.coverImg=options.cover;
 			this.getVideo();
-			console.log("onLoad")
+			
 		},
 		onShow(){
 			// 从本地存储获取主题色
-			this.tabbarColor=this.$getMainColor().color;
-			console.log("onShow")
+			this.tabbarColor.backgroundColor=this.$getMainColor().color
+			
 		},
 		
 		methods:{
+			
 			getVideo(){
 				let _this=this;
-				
+				// 详情接口1:"http://api.avatardata.cn/Movie/Query?key="+keys.detailKey,
+				let url="http://api.avatardata.cn/Movie/Query?key="+keys.detailKey;
+				// 详情接口2:https://m.maoyan.com/ajax/detailmovie?movieId=xxx
 				uni.request({
-					url:"http://api.avatardata.cn/Movie/Query?key="+keys.detailKey,
-					// url:"/detailApi?key="+keys.detailKey,
+					url:url,
 					data:{
-						name:this.name
+						title:_this.name
 					},
 					success(res) {
+						
 						if(res.data.error_code !== 1){
-							_this.showLoad=false
-							console.log(res.data.result)
+							
 							_this.desc=res.data.result.desc;
 							_this.area=res.data.result.area;
 							_this.dir=res.data.result.dir;
 							_this.tag=res.data.result.tag;
-							// _this.movieData.push(res.data.result);
-							// console.log(_this.movieData)
+							
 						}
-						
+					},
+					complete() {
+						_this.showLoad=false
 					}
 				})
 			},
+			// 暂停时触发
+			pause(){
+				this.paused=!this.paused;
+			},
+			// 点击暂停按钮图片进行播放
+			hideCover(){
+				if(this.paused==true){
+					this.videoText.play();
+				}
+			},
+			// 播放时触发
 			play(){
-				console.log(4111)
-			}
+				this.paused=false;
+				
+			},
+			
 		}
 	}
 </script>
@@ -109,14 +198,64 @@
 	}
 	.container{
 		width: 100%;
+		padding-bottom: 44px;
 	}
 	.videoArea{
 		width: 100%;
 	}
 	.detail{
 		width: 100%;
-		padding: 10upx;
+		padding:0 10upx;
 		display: flex;
 		justify-content: space-between;
+	}
+	.video-cover-view{
+		width: 50px;
+		height:50px;
+		background-color: rgba(00,00,00,0.5);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 0 auto;
+		transform: translate(0, 150%);
+	}
+	.video-cover-view cover-view{
+		font-size: 30px;
+		color: #fff;
+	}
+	
+	/* 收藏 */
+	.collectArea{
+		width: 100%;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		padding: 10rpx;
+	}
+	.collectArea view{
+		width: 20%;
+		text-align: center;
+		align-self: baseline;
+	}
+	.collectArea .iconfont{
+		font-size: 20px;
+		
+		display: block;
+	}
+	.collectArea text{
+		font-size: 12px;
+		color: #c1c1c1;
+	}
+	
+	.footer{
+		width: 100%;
+		position: fixed;
+		bottom: 0rpx;
+		height: 44px;
+		border-top: 1rpx solid #f8f8f8;
+	}
+	.footer .inp{
+		line-height: 44px;
+		padding: 0 10rpx;
 	}
 </style>

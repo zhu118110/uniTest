@@ -49,11 +49,11 @@
 	margin-top: 10rpx;
 	height:60rpx;
 	line-height: 60rpx;
-	font-size: 30rpx;
+	font-size: 16px;
 }
 .header .login view button.data-v-0be17cc6{
 	line-height: none !important;
-	font-size: 30rpx;
+	font-size: 14px;
 	color: #fff;
 	border: none;
 }
@@ -74,10 +74,10 @@
 	color: #fff;
 }
 .headnav .navList .navIcon.data-v-0be17cc6{
-	font-size: 50rpx;
+	font-size: 25px;
 }
 .headnav .navList .nav-Item.data-v-0be17cc6{
-	font-size: 32rpx;
+	font-size: 14px;
 }
 /* 6个list */
 .listArea.data-v-0be17cc6{
@@ -96,7 +96,7 @@
 	border-bottom: 1rpx solid #f1f1f1;
 }
 .listArea .list .list-item .listIcon.data-v-0be17cc6{
-	font-size: 32rpx;
+	font-size: 16rx;
 	vertical-align: middle;
 }
 .listArea .list .list-item .icon-zhuti.data-v-0be17cc6{
@@ -122,7 +122,7 @@
 	vertical-align: middle;
 }
 .listArea .list button.data-v-0be17cc6{
-	font-size: 28rpx;
+	font-size: 14px;
 	background-color: inherit;
 	text-align: left;
 	line-height: none;

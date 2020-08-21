@@ -22,6 +22,8 @@ Vue.prototype.$getMainColor=function(){
 	})
 	return mainColor
 };
+
+
 App.mpType = 'app'
 
 const app = new Vue({

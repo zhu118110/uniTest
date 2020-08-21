@@ -1,7 +1,7 @@
 {
-  "navigationBarTitleText": "主页",
   "navigationStyle": "custom",
   "usingComponents": {
+    "u-navbar": "/components/uview-ui/components/u-navbar/u-navbar",
     "jingxuan": "/pages/index/indexModule/jingxuan",
     "juji": "/pages/index/indexModule/juji",
     "dianying": "/pages/index/indexModule/dianying",

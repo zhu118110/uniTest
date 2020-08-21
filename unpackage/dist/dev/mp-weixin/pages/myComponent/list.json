@@ -1,4 +1,8 @@
 {
-  "usingComponents": {},
-  "component": true
+  "component": true,
+  "usingComponents": {
+    "u-image": "/components/uview-ui/components/u-image/u-image",
+    "u-loading": "/components/uview-ui/components/u-loading/u-loading",
+    "uni-rate": "/components/uni-rate/uni-rate"
+  }
 }

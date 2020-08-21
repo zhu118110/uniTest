@@ -1,11 +1,13 @@
 {
-  "navigationBarTitleText": "详情页",
   "navigationStyle": "custom",
   "usingComponents": {
     "u-mask": "/components/uview-ui/components/u-mask/u-mask",
     "u-loading": "/components/uview-ui/components/u-loading/u-loading",
+    "u-navbar": "/components/uview-ui/components/u-navbar/u-navbar",
     "u-collapse": "/components/uview-ui/components/u-collapse/u-collapse",
     "u-collapse-item": "/components/uview-ui/components/u-collapse-item/u-collapse-item",
+    "u-gap": "/components/uview-ui/components/u-gap/u-gap",
+    "u-search": "/components/uview-ui/components/u-search/u-search",
     "video-player": "/components/yy-video-player/yy-video-player"
   }
 }

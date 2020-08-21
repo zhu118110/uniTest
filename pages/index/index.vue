@@ -1,6 +1,12 @@
 <template>
 	<view class="container">
-		<view class="status_bar" :style="{'background-color':tabbarColor}"></view>
+		<!-- <view class="status_bar" :style="{'background-color':tabbarColor}"></view> -->
+		<u-navbar :is-back="false" :is-fixed="false" :background="tabbarColor">
+			<view class="navBar">
+				<image src="../../static/logo1.jpg" mode=""></image>
+				<text>人人视频</text>
+			</view>
+		</u-navbar>
 		<view class="scrollView">
 			<scroll-view scroll-x="true" class="scroll_x" :scroll-left="scroll_left">
 				<view class="nav-item" 
@@ -15,29 +21,29 @@
 			
 			<swiper @change="touch" :current="scroll_index" duration="300" :style="{'height':siwperHeight+'px'}">
 				<swiper-item>
-					<keep-alive>
+					
 						<jingxuan class="component" v-if="currentComponent == 'jingxuan'"></jingxuan>
-					</keep-alive>
+					
 				</swiper-item>
 				<swiper-item>
-					<keep-alive>
+				
 						<juji class="component" v-if="currentComponent == 'juji'"></juji>
-					</keep-alive>
+					
 				</swiper-item>
 				<swiper-item >
-					<keep-alive>
+					
 						<dianying class="component" v-if="currentComponent == 'dianying'"></dianying>
-					</keep-alive>
+					
 				</swiper-item>
 				<swiper-item >
-					<keep-alive>
+				
 						<dongman class="component" v-if="currentComponent == 'dongman'"></dongman>
-					</keep-alive>
+					
 				</swiper-item>
 				<swiper-item >
-					<keep-alive>
+					
 						<zongyi class="component" v-if="currentComponent == 'zongyi'"></zongyi>
-					</keep-alive>
+					
 				</swiper-item>
 				
 			</swiper>
@@ -54,9 +60,11 @@
 	export default {
 		data() {
 			return {
-				siwperHeight:700,
+				siwperHeight:1500,
 				currentComponent:"jingxuan",//默认当前页面加载的组件         
-				tabbarColor:"#2a91d5",
+				tabbarColor:{
+					backgroundColor:"#2a91d5"
+				},
 				scrollTitle:[{
 					id:"jx",
 					title:"精选",
@@ -86,12 +94,10 @@
 		components:{
 			jingxuan,juji,dianying,dongman,zongyi
 		},
-		
-		
 		onShow(){
 			
 			// 从本地获取主题色
-			this.tabbarColor=this.$getMainColor().color;
+			this.tabbarColor.backgroundColor=this.$getMainColor().color||"#2a91d5";
 			
 		},
 		onReady() {
@@ -146,9 +152,21 @@
 <style scoped>
 	.container{
 		width: 100%;
-		font-size: 28rpx;
+		font-size: 14px;
 		box-sizing: border-box;
-		
+	}
+	.navBar{
+		height: 44px;
+		line-height: 44px;
+		margin-left: 20rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #fff;
+	}
+	.navBar image{
+		width: 25px;
+		height: 25px;
 	}
 	.scrollView{
 		width: 100%;
