@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "u-read-more": "/components/uview-ui/components/u-read-more/u-read-more",
+    "u-section": "/components/uview-ui/components/u-section/u-section"
+  },
+  "component": true
+}

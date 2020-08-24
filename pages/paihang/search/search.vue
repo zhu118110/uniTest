@@ -125,7 +125,7 @@
 						if(res.data.result){
 							_this.seacrListShow=false
 							_this.result.push(res.data.result)
-							console.log(res.data)
+							
 						}else{
 							_this.result=[];
 							_this.seacrListShow=false;

@@ -1,84 +1,115 @@
-
-view.data-v-3e159eb4{
-	font-size: 32rpx;
-	box-sizing: border-box;
+view.data-v-3e159eb4 {
+  font-size: 32rpx;
+  box-sizing: border-box;
 }
-.container.data-v-3e159eb4{
-	width: 100%;
-	padding-bottom: 44px;
+.container.data-v-3e159eb4 {
+  width: 100%;
 }
-.videoArea.data-v-3e159eb4{
-	width: 100%;
+.videoArea.data-v-3e159eb4 {
+  width: 100%;
+  font-size: 0;
 }
-.detail.data-v-3e159eb4{
-	width: 100%;
-	padding:0 10rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-box-pack: justify;
-	-webkit-justify-content: space-between;
-	        justify-content: space-between;
+.videoArea video.data-v-3e159eb4 {
+  object-fit: fill;
 }
-.video-cover-view.data-v-3e159eb4{
-	width: 50px;
-	height:50px;
-	background-color: rgba(00,00,00,0.5);
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	margin: 0 auto;
-	-webkit-transform: translate(0, 150%);
-	        transform: translate(0, 150%);
+.video-cover-view.data-v-3e159eb4 {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  margin: 0 auto;
+  -webkit-transform: translate(0, 150%);
+          transform: translate(0, 150%);
 }
-.video-cover-view cover-view.data-v-3e159eb4{
-	font-size: 30px;
-	color: #fff;
+.video-cover-view cover-view.data-v-3e159eb4 {
+  font-size: 30px;
+  color: #fff;
+}
+/* 选项卡区域 */
+.tag.data-v-3e159eb4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+  height: 44px;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  background-color: #fff;
+  z-index: ;
+  width: 100%;
+  padding: 0 10rpx;
+}
+.tag > view.data-v-3e159eb4 {
+  height: 100%;
+  line-height: 44px;
+  width: 40%;
+  text-align: center;
+}
+.tag .tag-active.data-v-3e159eb4 {
+  color: red;
+  border-bottom: 2px solid red;
+}
+.detail.data-v-3e159eb4 {
+  width: 100%;
+  padding: 0 10rpx;
 }
 /* 收藏 */
-.collectArea.data-v-3e159eb4{
-	width: 100%;
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-box-pack: start;
-	-webkit-justify-content: flex-start;
-	        justify-content: flex-start;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-	padding: 10rpx;
+.collectArea.data-v-3e159eb4 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  padding: 10rpx;
 }
-.collectArea view.data-v-3e159eb4{
-	width: 20%;
-	text-align: center;
-	-webkit-align-self: baseline;
-	        align-self: baseline;
+.collectArea view.data-v-3e159eb4 {
+  width: 20%;
+  text-align: center;
+  -webkit-align-self: baseline;
+          align-self: baseline;
 }
-.collectArea .iconfont.data-v-3e159eb4{
-	font-size: 20px;
-	
-	display: block;
+.collectArea .iconfont.data-v-3e159eb4 {
+  font-size: 20px;
+  display: block;
 }
-.collectArea text.data-v-3e159eb4{
-	font-size: 12px;
-	color: #c1c1c1;
+.collectArea text.data-v-3e159eb4 {
+  font-size: 12px;
+  color: #c1c1c1;
 }
-.footer.data-v-3e159eb4{
-	width: 100%;
-	position: fixed;
-	bottom: 0rpx;
-	height: 44px;
-	border-top: 1rpx solid #f8f8f8;
+.like.data-v-3e159eb4 {
+  padding: 0 10rpx;
+  margin: 10rpx 0;
 }
-.footer .inp.data-v-3e159eb4{
-	line-height: 44px;
-	padding: 0 10rpx;
+.commentTab.data-v-3e159eb4,
+.replyPopUp.data-v-3e159eb4 {
+  padding: 0 10rpx;
+}
+.loading.data-v-3e159eb4 {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
 }
 

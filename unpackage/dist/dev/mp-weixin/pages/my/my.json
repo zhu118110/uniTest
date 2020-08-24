@@ -1,5 +1,8 @@
 {
   "navigationBarTitleText": "我的",
   "navigationStyle": "custom",
-  "usingComponents": {}
+  "usingComponents": {
+    "u-mask": "/components/uview-ui/components/u-mask/u-mask",
+    "u-loading": "/components/uview-ui/components/u-loading/u-loading"
+  }
 }

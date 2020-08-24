@@ -1,12 +1,10 @@
 <template>
 	<view class="box">
 		<view class="status_bar" :style="{'background-color':tabbarColor}"></view>
-			
-		
 		<view class="header" :style="{'background-color':tabbarColor}">
-			<!-- 头像 -->
-			<view class="login">
-				
+			<!-- 微信小程序登录区域 -->
+			<!-- #ifdef MP-WEIXIN -->
+			<view class="wxLogin">
 				<view class="head_img">
 					<image :src="userInfor.avatarUrl"></image>
 				</view>
@@ -21,6 +19,31 @@
 					<!-- #endif -->
 				</view>
 			</view>
+			<!-- #endif -->
+			
+			<!-- h5,app登录区域 -->
+			<!-- #ifndef MP-WEIXIN -->
+				<view class="appLogin" @click="appLogin">
+					<view class="appLogin_img">
+						<image :src="userInfor.avatarUrl"></image>
+					</view>
+					<view class="appLogin_name">
+						<view class="notLogin">
+							<view>
+								登录或注册
+							</view>
+							<view>
+								账号管理
+							</view>
+						</view>
+						<view>
+							<u-icon name="arrow-right" color="#ccc"></u-icon>
+						</view>
+					</view>
+					
+				</view>
+			<!-- #endif -->
+			
 			<!-- 4个导航 -->
 			<view class="headnav">
 				<block v-for="(item , index) in navList" :key = "index">
@@ -42,7 +65,7 @@
 					<text class="listText">更换主题</text>
 				</view>
 				<!-- #ifdef MP-WEIXIN -->
-				<view  class = "list-item" style="padding: 0 20rpx;">
+				<view  class = "list-item" style="padding: 0">
 					<button id="share" open-type="share" :hover-class="false">
 						<text class="listIcon iconfont icon-tubiao-"></text>
 						<text class="listText">分享给好友</text>
@@ -75,10 +98,18 @@
 			</view>
 		</view>
 		
+		<!-- 遮罩层,小程序用户登录时显示loading动画 -->
+		<u-mask :show="maskShow" :custom-style="{background: 'rgba(255, 255, 255, 0.5)'}">
+			<view class="load">
+				<u-loading :show="maskShow" mode="circle" size="50"></u-loading>
+					正在登录
+			</view>
+		</u-mask>
 	</view>
 </template>
 
 <script>
+	import {mapState,mapMutations} from "vuex"
 	export default{
 		data(){
 			return{
@@ -95,19 +126,29 @@
 					icon:"icon-yunliankeji_gongyinglianfuben",
 					text:"设置"
 				}],
-				
-				tabbarColor:"",  //主题颜色
+				tabbarColor:"#2a91d5",  //主题颜色
 				userInfor:{//小程序端用户信息
 					avatarUrl:"../../static/logo.png",
 					nickName: ""
 				},  
+				maskShow:false
 			}
+		},
+		onLoad() {
+			
 		},
 		// 页面显示时监听 “更改主题” 页面事件，动态改变底部tabbar颜色
 		onShow() {
 			this.tabbarColor=this.$getMainColor().color;
+			// #ifdef MP-WEIXIN
+			let userInfor=uni.getStorageSync("userInfor");
+			if(userInfor){
+				this.userInfor.avatarUrl=userInfor.avatarUrl;
+				this.userInfor.nickName=userInfor.nickName;
+				this.login(userInfor);
+			}
+			// #endif
 		},
-		
 		methods:{
 			/*
 				点击跳转别的页面
@@ -130,7 +171,7 @@
 						href:"http://www.baidu.com",
 						success() {
 							uni.showToast({
-								title:"分享成功",
+								title:"打开分享",
 								icon:"none"
 							})
 						},
@@ -141,9 +182,9 @@
 							})
 						}
 					})
+					
+					
 				// #endif
-				
-				
 			},	
 			// 微信端点击右上角调用分享功能
 			onShareAppMessage(res){
@@ -164,23 +205,31 @@
 					icon:"none"
 				})
 			},
-			// 小程序获取用户信息
+			// 小程序获取用户信息登录
+			// #ifdef MP-WEIXIN
 			getuserinfo(){	
-				let _this=this;
+				let _this = this;
+				_this.maskShow=true;
 				uni.login({
 					provider: 'weixin',
-					auth_user:"auth_user",
+					auth_user: "auth_user",
 					success(res) {
 						
 						uni.getUserInfo({
 							lang:"zh_CN",
 							provider:"weixin",
 							success(res) {
-								_this.userInfor.avatarUrl=res.userInfo.avatarUrl;
-								_this.userInfor.nickName=res.userInfo.nickName;
 								
+								setTimeout(function(){
+									_this.userInfor.avatarUrl=res.userInfo.avatarUrl;
+									_this.userInfor.nickName=res.userInfo.nickName;
+									_this.maskShow=false;
+									// _this.login是vuex里mutatuons的方法,用来保存登录用户的信息
+									_this.login(res.userInfo)
+								},1000)
 							},
 							fail(err) {
+								_this.maskShow=false;
 								uni.showToast({
 									title:"获取用户授权失败"+err,
 									icon:"none"
@@ -192,33 +241,51 @@
 					},
 					fail(err) {
 						uni.showToast({
-							title:"登录失败"+err,
+							title:"登录失败" + err,
 							icon:"none"
 						})
 					}
 				})
 			},
-			// app\h5登录
+			// #endif
+			
+			// app\h5点击登录跳转到登陆页面
 			appLogin(){
-				uni.showToast({
-					title:"登录",
-					icon:"none"
+				uni.navigateTo({
+					url:"./login/login"
 				})
-			}
+			},
+			
+			
+			...mapMutations(["login"])
 		},
 		watch:{
-			
 			
 		}
 	}
 </script>
 
-<style scoped>
+<style scoped lang="less">
 	
 	.box{
 		width:100%;
 		height: 100%;
 		box-sizing:border-box;
+	}
+	.tx(@width,@height){
+		width: @width;
+		/* max-width: 180rpx; */
+		height: @height;
+		/* max-height: 80%; */
+		border-radius: 50%;
+		overflow: hidden;
+		text-align: center;
+		font-size: 0;
+		display: inline-block;
+		& image{
+			width: 100%;
+			height: 100%;
+		}
 	}
 	.header{
 		
@@ -226,7 +293,8 @@
 		
 	}
 	/* 头像样式 */
-	.header .login{
+	/* #ifdef MP-WEIXIN */
+	.header .wxLogin{
 		text-align: center;
 		display:flex;
 		flex-direction: column;
@@ -234,23 +302,11 @@
 		justify-content: center;
 		
 	}
-	.header .login .head_img{
-		width: 150rpx;
-		/* max-width: 180rpx; */
-		height: 150rpx;
-		/* max-height: 80%; */
-		border-radius: 50%;
-		overflow: hidden;
-		text-align: center;
-		font-size: 0;
-		display: inline-block;
+	.header .wxLogin .head_img{
+		.tx(150rpx,150rpx)
 	}
-	.header .login .head_img image{
-		width: 100%;
-		height: 100%;
-		
-	}
-	.header .login>view:last-child{
+	
+	.header .wxLogin>view:last-child{
 		text-align: center;
 		color: #fff;
 		padding: 0rpx 80rpx;
@@ -262,21 +318,57 @@
 		font-size: 16px;
 		
 	}
-	/* #ifdef MP-WEIXIN */
-	.header .login view button{
+	.header .wxLogin view button{
 		line-height: none !important;
 		font-size: 14px;
 		color: #fff;
 		border: none;
 	}
 	/* #endif */
+	
+	/* #ifndef MP-WEIXIN*/
+		.appLogin{
+			width: 100%;
+			padding: 0 20rpx;
+			// background-color: #fff;
+			display: flex;
+			justify-content: flex-start;
+			.appLogin_img{
+				.tx(130rpx,130rpx )
+			}
+			.appLogin_name{
+				flex: 1;
+				
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-left: 20rpx;
+				.notLogin{
+					display: flex;
+					flex-direction: column;
+					justify-content: space-around;
+					& view:first-child{
+						font-size: 18px;
+						font-weight: 800;
+					}
+					& view:last-child{
+						color: #ccc;
+					}
+				}
+				
+			}
+			
+		}
+	/* #endif */
+	
 	/* 头部4个导航 */
 	.headnav{
 		display: flex;
-		justify-content: space-around;
+		justify-content: space-between;
 		
-		width: 90%;
-		margin: 40rpx auto 0;
+		width: 100%;
+		margin-top: 40rpx;
+		padding: 0 20rpx;
 	}
 	.headnav .navList{
 		text-align: center;
@@ -287,7 +379,7 @@
 		font-size: 25px;
 	}
 	.headnav .navList .nav-Item{
-		font-size: 14px;
+		font-size: 16px;
 	}
 	
 	
@@ -306,11 +398,12 @@
 		margin: 0 auto;
 	}
 	.listArea .list .list-item{
-		padding: 20rpx;
+		padding: 20rpx 0;
 		border-bottom: 1rpx solid #f1f1f1;
+		font-size: 16px;
 	}
 	.listArea .list .list-item .listIcon{
-		font-size: 16rx;
+		  font-size: 18px;
 		vertical-align: middle;
 	}
 	.listArea .list .list-item .icon-zhuti{
@@ -336,7 +429,7 @@
 		vertical-align: middle;
 	}
 	.listArea .list button{
-		font-size: 14px;
+		font-size: 16px;
 		background-color: inherit;
 		text-align: left;
 		line-height: none;
@@ -347,5 +440,13 @@
 	.listArea .list button::after{
 		width: 0;
 		height: 0;
+	}
+	
+	.load{
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 </style>

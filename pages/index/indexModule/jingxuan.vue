@@ -3,9 +3,7 @@
 		<scroll-view 
 			scroll-y="true" 
 			:refresher-enabled="false"
-			@refresherpulling="refresherpulling"
-			@refresherrefresh="refresherrefresh"
-			@refresherrestore="refresherrestore">
+			>
 			<!-- 顶部轮播图 -->
 			<view class="header">
 				<swiper class="swiper" 
@@ -181,7 +179,7 @@
 			list
 		},
 		created() {
-			this.getAllMovie();
+			// this.getAllMovie();
 			// this.getAllTv();
 			// this.getAllDm();
 			// this.getAllZy()

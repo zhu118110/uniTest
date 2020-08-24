@@ -1,7 +1,18 @@
 <script>
+	import {mapMutations} from "vuex"
 	export default {
 		onLaunch: function() {
-			// console.log('App Launch')
+			let _this = this;
+			//  应用刚进来时从本地获取登录信息
+			uni.getStorage({
+				key:"userInfor",
+				success:(res)=>{
+					// _this.login(res);
+					_this.login(res.data)
+				}
+			})
+		
+			
 		},
 		onShow: function() {
 			// console.log('App Show')
@@ -9,9 +20,9 @@
 		onHide: function() {
 			// console.log('App Hide')
 		},
-		watch:{
-			
-		}
+		methods: {  
+			...mapMutations(['login'])  
+		}  
 		
 		
 	}

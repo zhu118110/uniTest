@@ -3,20 +3,31 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
-		titleBarStyle:[],  //存储导航条颜色
+		// 用户登录信息
+		userInfor:{
+			user_name:"",   //用户名称
+			user_img:"",   //用户头像
+		},
+		isLogin:false,  //是否登录
 	},
     mutations: {
-		// 修改导航条颜色
-		changetitleBarStyle(state,data){
-			state.titleBarStyle=[];
-			state.titleBarStyle.push(data);
-			console.log("主题改变了："+state.titleBarStyle)
+		// 保存登录信息
+		login(state,userInfor){
+			state.isLogin = true;
+			state.userInfor.user_name = userInfor.nickName;
+			state.userInfor.user_img = userInfor.avatarUrl;
+			uni.setStorage({
+				key:"userInfor",
+				data:userInfor
+			})
 		},
-		aaa(state,data){
-			uni.setNavigationBarColor({
-				frontColor:"#ffffff",
-				backgroundColor:state.titleBarStyle[0].color,
-				
+		// 退出登录清除登录信息
+		loginOut(state,userInfor){
+			state.isLogin=false;
+			state.userInfor.user_name="";
+			state.userInfor.user_img="";
+			uni.removeStorage({
+				key:"userInfor"
 			})
 		}
 	},

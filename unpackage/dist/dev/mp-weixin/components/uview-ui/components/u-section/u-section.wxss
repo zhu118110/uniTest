@@ -24,65 +24,46 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.back-button {
-  width: 30px;
-  height: 30px;
+.u-section.data-v-5123090f {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  opacity: 0.8;
-  margin-top: 25px;
-  margin-left: 15px;
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
 }
-.back-icon {
-  width: 20px;
-  height: 20px;
+.u-section__title.data-v-5123090f {
+  position: relative;
+  font-size: 28rpx;
+  padding-left: 20rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
 }
-.download-button {
+.u-section__title__icon-wrap.data-v-5123090f {
   position: absolute;
-  top: 90px;
-  right: 15px;
-  width: 30px;
-  height: 30px;
+}
+.u-section__title__text.data-v-5123090f {
+  line-height: 1;
+}
+.u-section__right-info.data-v-5123090f {
+  color: #909399;
+  font-size: 26rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  opacity: 0.8;
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.8);
 }
-.process-text {
-  color: #fff;
-  font-size: 10px;
-}
-.video-process-bar {
-  height: 2px;
-}
-.download-icon-horizontal {
-  position: absolute;
-  right: 30px;
-  width: 30px;
-  height: 30px;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  opacity: 0.8;
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.8);
-}
-.process-text-horizontal {
-  color: #fff;
-  font-size: 5px;
+.u-section__right-info__icon-arrow.data-v-5123090f {
+  margin-left: 6rpx;
 }
 

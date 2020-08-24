@@ -101,12 +101,12 @@
 			
 		},
 		onReady() {
-			// this.getPageHeight();
+			this.getPageHeight();
 		},
 		methods: {
 			// 点击顶部滚动导航时执行
 			getItemIndex(i){
-				
+				this.getPageHeight();
 				let cur = i; //记录点击的导航的下标
 				let singleNavWidth = uni.getSystemInfoSync().windowWidth / 5; //每屏幕导航最多显示5个                
 				this.scroll_left = (cur - 2) * singleNavWidth;   //scroll_left控制移动的距离
@@ -118,7 +118,7 @@
 					
 					this.scroll_index = i;
 				}
-				// this.getPageHeight();
+				
 			},
 			
 			// 滑动swiper时触发
@@ -131,12 +131,12 @@
 			},
 			
 			// 滑动swiper-item切换页面时动态设置swiper高度,否则每个页面高度都相同
-			getPageHeight(){
+			async getPageHeight(){
 				
 				let _this = this;
 				_this.siwperHeight = 0;
 				const query = uni.createSelectorQuery().in(this);
-				query.selectAll(".component").boundingClientRect(d=>{
+				await query.selectAll(".component").boundingClientRect(d=>{
 					
 					_this.siwperHeight = Math.ceil(d[0].height);
 					

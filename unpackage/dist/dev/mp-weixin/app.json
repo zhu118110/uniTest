@@ -1,10 +1,11 @@
 {
   "pages": [
     "pages/detail/detail",
-    "pages/index/index",
-    "pages/paihang/paihang",
-    "pages/paihang/search/search",
+    "pages/my/login/login",
     "pages/my/my",
+    "pages/paihang/paihang",
+    "pages/index/index",
+    "pages/paihang/search/search",
     "pages/my/changeTitle/changeTitle"
   ],
   "subPackages": [],
@@ -35,5 +36,5 @@
   },
   "permission": {},
   "usingComponents": {},
-  "sitemapLocation": "sitemap57.json"
+  "sitemapLocation": "sitemap95.json"
 }
