@@ -1,8 +1,8 @@
 view.data-v-3e159eb4 {
-  font-size: 32rpx;
   box-sizing: border-box;
 }
 .container.data-v-3e159eb4 {
+  height: 100%;
   width: 100%;
 }
 .videoArea.data-v-3e159eb4 {

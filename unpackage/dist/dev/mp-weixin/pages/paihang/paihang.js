@@ -97,7 +97,7 @@ var components = {
     return __webpack_require__.e(/*! import() | components/uview-ui/components/u-navbar/u-navbar */ "components/uview-ui/components/u-navbar/u-navbar").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-navbar/u-navbar.vue */ 100))
   },
   uSearch: function() {
-    return __webpack_require__.e(/*! import() | components/uview-ui/components/u-search/u-search */ "components/uview-ui/components/u-search/u-search").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-search/u-search.vue */ 212))
+    return __webpack_require__.e(/*! import() | components/uview-ui/components/u-search/u-search */ "components/uview-ui/components/u-search/u-search").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-search/u-search.vue */ 205))
   }
 }
 var render = function() {
@@ -137,7 +137,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var list = function list() {__webpack_require__.e(/*! require.ensure | pages/myComponent/list */ "pages/myComponent/list").then((function () {return resolve(__webpack_require__(/*! ../myComponent/list.vue */ 219));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var list = function list() {__webpack_require__.e(/*! require.ensure | pages/myComponent/list */ "pages/myComponent/list").then((function () {return resolve(__webpack_require__(/*! ../myComponent/list.vue */ 212));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 

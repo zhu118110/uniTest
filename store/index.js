@@ -4,18 +4,15 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
 		// 用户登录信息
-		userInfor:{
-			user_name:"",   //用户名称
-			user_img:"",   //用户头像
-		},
+		userInfor:{},
 		isLogin:false,  //是否登录
 	},
     mutations: {
-		// 保存登录信息
+		// 保存小程序登录信息
+		
 		login(state,userInfor){
 			state.isLogin = true;
-			state.userInfor.user_name = userInfor.nickName;
-			state.userInfor.user_img = userInfor.avatarUrl;
+			state.userInfor = userInfor;
 			uni.setStorage({
 				key:"userInfor",
 				data:userInfor
@@ -24,8 +21,7 @@ const store = new Vuex.Store({
 		// 退出登录清除登录信息
 		loginOut(state,userInfor){
 			state.isLogin=false;
-			state.userInfor.user_name="";
-			state.userInfor.user_img="";
+			state.userInfor={};
 			uni.removeStorage({
 				key:"userInfor"
 			})

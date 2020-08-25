@@ -31,6 +31,11 @@
 <style lang="scss">
 	@import url("font/font.css");
 	@import "./components/uview-ui/index";
+	page{
+		
+		height: 100%;
+		
+	}
 	view,text,image{
 		box-sizing: border-box;
 	}

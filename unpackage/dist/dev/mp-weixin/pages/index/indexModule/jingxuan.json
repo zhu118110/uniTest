@@ -1,6 +1,6 @@
 {
+  "component": true,
   "usingComponents": {
     "list": "/pages/myComponent/list"
-  },
-  "component": true
+  }
 }

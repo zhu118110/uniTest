@@ -7,8 +7,8 @@
 			
 		</u-mask> -->
 		<u-navbar title="人人视频" :background="tabbarColor"></u-navbar>
-		<u-sticky offset-top="140"  style="background-color: #fff;">
-			<view>
+		<!-- <u-sticky offset-top="140"  style="background-color: #fff;"> -->
+			<view class="fixed">
 				<!-- 视频播放区域 -->
 				<view class="videoArea">
 					<video 
@@ -41,72 +41,78 @@
 					</view>
 				</view>
 			</view>
-		</u-sticky>
+		<!-- </u-sticky> -->
 		
 		<!-- 简介区域 -->
-		<view v-show="tagActive">
+		<view v-show="tagActive" class="introArea">
 			<!-- 影片详情 -->
-			<view class="detail">
-				<u-collapse style="width: 100%;">
-					<u-collapse-item :title="moviewInfor.name" >
-						<view>
-							<view>导演:{{ moviewInfor.dir }}</view>
-							<view>类型:{{ moviewInfor.tag }}</view>
-							<view style="text-indent: 1cm;">{{ moviewInfor.desc }}</view>	
-						</view>
-						
-					</u-collapse-item>
-				</u-collapse>
-			</view>
-			
-			<!-- 收藏点赞区域 -->
-			<view class="collectArea">
-				<view>
-					<text class="iconfont icon-dianzan"></text>
-					<text>25</text>
-				</view>	
-				<view >
-					<text class="iconfont icon-caishixin-"></text>
-					<text>10</text>
-				</view>	
-				<view>
-					<text class="iconfont icon-shoucang2"></text>
-					<text>收藏</text>
+			<scroll-view scroll-y="true" :style="{'height':height}">
+				<view class="detail">
+					<u-collapse style="width: 100%;">
+						<u-collapse-item :title="moviewInfor.name" >
+							<view>
+								<view>导演:{{ moviewInfor.dir }}</view>
+								<view>类型:{{ moviewInfor.tag }}</view>
+								<view style="text-indent: 1cm;">{{ moviewInfor.desc }}</view>	
+							</view>
+							
+						</u-collapse-item>
+					</u-collapse>
 				</view>
-				<view>
-					<text class="iconfont icon-tubiao-"></text>
-					<text>分享</text>
-				</view>	
-			</view>
+					
+				<!-- 收藏点赞区域 -->
+				<view class="collectArea">
+					<view>
+						<text class="iconfont icon-dianzan"></text>
+						<text>25</text>
+					</view>	
+					<view >
+						<text class="iconfont icon-caishixin-"></text>
+						<text>10</text>
+					</view>	
+					<view>
+						<text class="iconfont icon-shoucang2"></text>
+						<text>收藏</text>
+					</view>
+					<view>
+						<text class="iconfont icon-tubiao-"></text>
+						<text>分享</text>
+					</view>	
+				</view>
+					
+				<u-gap height="20" bg-color="#f8f8f8"></u-gap>
+				
+				<!-- 猜你喜欢 -->
+				<view class="like">
+					<like :likeData="likeData"></like>
+				</view>
 			
-			<u-gap height="20" bg-color="#f8f8f8"></u-gap>
-			
-			<!-- 猜你喜欢 -->
-			<view class="like">
-				<like :likeData="likeData"></like>
-			</view>
+			</scroll-view>
 		</view>
 		
 		<!-- 评论区域 -->
 		<view v-show="!tagActive" class="commentTab" >
+			<scroll-view scroll-y="true" :style="{'height':plHeight}">
+				<comment @showReplyPop="showReplyPop" :commentData="commentData"></comment>
+				<!-- 回复详情弹出层 -->
+				<u-popup 
+					v-model="replyPopUp" 
+					mode="bottom" 
+					length="50%" 
+					:mask="false"
+					:mask-close-able="false"
+					>
+					<view class="replyPopUp">
+						<replyPopUp :commentList="replyData" @hideProp="hideProp"></replyPopUp>
+					</view>
+				</u-popup>
+			</scroll-view>
 			<u-mask :show="showLoad" :mask-click-able="false" :custom-style="{background: 'rgba(255, 255, 255, 0.5)',height:'inherit'}">
 				<view class="loading">
 					<u-loading :show="showLoad" :color="tabbarColor"></u-loading>
 				</view>
 			</u-mask>
-			<comment @showReplyPop="showReplyPop" :commentData="commentData"></comment>
-			<!-- 回复详情弹出层 -->
-			<u-popup 
-				v-model="replyPopUp" 
-				mode="bottom" 
-				length="50%" 
-				:mask="false"
-				:mask-close-able="false"
-				>
-				<view class="replyPopUp">
-					<replyPopUp :commentList="replyData" @hideProp="hideProp"></replyPopUp>
-				</view>
-			</u-popup>
+			
 			
 			<!-- 底部评论输入框 -->
 			<commentInput @search="getCommentMsg"></commentInput>
@@ -158,7 +164,8 @@
 				replyPopUp:false,
 				replyData:[],
 				commentData:{commentMsg:"",name:"用户",commentTime:"2020-8-23"},
-				
+				height:"",
+				plHeight:""
 			}
 		},
 		onReady() {
@@ -183,8 +190,34 @@
 			this.tabbarColor.backgroundColor=this.$getMainColor().color||""
 			
 		},
-		
+		onReady() {
+			this.getHeight(".fixed",this.height);
+			this.getHeight(".commentTab",this.plHeight);
+			
+		},
 		methods:{
+			getHeight(ele,height){
+				let _this=this;
+				let pageHeight="";
+				let queryHeight="";
+				let page=uni.getSystemInfo({
+					success(data) {
+						pageHeight = data.windowHeight
+					}
+				})
+				let query=uni.createSelectorQuery().in(this);
+				query.select(ele).boundingClientRect(res=>{
+					console.log(res)
+					queryHeight=parseInt(res.height);
+				}).exec(a=>{
+					console.log(pageHeight,queryHeight)
+					height=(pageHeight-queryHeight)*2+"rpx"
+					
+				})
+				
+			},
+			
+			
 			
 			getVideo(){
 				let _this=this;
@@ -229,7 +262,8 @@
 			},
 			// 点击简介、评论选项卡时更改选中的样式
 			choossetag(flag){
-				this.tagActive=flag
+				this.tagActive=flag;
+				
 			},
 			/*
 				点击某条评论显示回复的详细内容
@@ -270,17 +304,23 @@
 				
 				// console.log(data)
 			}
+		
+			
+		
 		},
 		
 	}
 </script>
 
 <style scoped lang="less">
+	
 	view{
-		font-size: 32upx;
+		
 		box-sizing: border-box;
 	}
+	
 	.container{
+		height: 100%;
 		width: 100%;
 	}
 	.videoArea{
@@ -331,8 +371,7 @@
 	
 	.detail{
 		width: 100%;
-		padding:0 10upx;
-		
+		padding:0 10rpx;
 	}
 	
 	/* 收藏 */

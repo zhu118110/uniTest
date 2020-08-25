@@ -97,7 +97,7 @@ var components = {
     return __webpack_require__.e(/*! import() | components/uview-ui/components/u-navbar/u-navbar */ "components/uview-ui/components/u-navbar/u-navbar").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-navbar/u-navbar.vue */ 100))
   },
   uSearch: function() {
-    return __webpack_require__.e(/*! import() | components/uview-ui/components/u-search/u-search */ "components/uview-ui/components/u-search/u-search").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-search/u-search.vue */ 212))
+    return __webpack_require__.e(/*! import() | components/uview-ui/components/u-search/u-search */ "components/uview-ui/components/u-search/u-search").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-search/u-search.vue */ 205))
   }
 }
 var render = function() {
@@ -206,7 +206,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _api = _interopRequireDefault(__webpack_require__(/*! ../../../api/api.js */ 46));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+var _api = _interopRequireDefault(__webpack_require__(/*! ../../../api/api.js */ 54));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
 //
@@ -274,7 +274,7 @@ var _api = _interopRequireDefault(__webpack_require__(/*! ../../../api/api.js */
 //
 //
 //
-var _default = { data: function data() {return { searchMsg: "复仇者联盟", //搜索字段
+var _default = { data: function data() {return { searchMsg: "", //搜索字段
       tabbarColor: { backgroundColor: "#2a91d5" }, searchCol: { color: "#fff" }, hotSearch: ["越狱", "复仇者联盟", "神盾局特工", "代号:47", "监狱风云"], //热门搜索
       historySearch: [], //历史搜索
       result: [], seacrListShow: true //true时显示历史搜索,false时显示搜索结果
@@ -287,13 +287,8 @@ var _default = { data: function data() {return { searchMsg: "复仇者联盟", /
         } });},
     // 清空历史搜索记录
     clearHistorySearch: function clearHistorySearch() {
-
-      uni.removeStorage({
-        key: "historySearch",
-        success: function success() {
-          this.historySearch = [];
-        } });
-
+      uni.removeStorageSync("historySearch");
+      this.historySearch = [];
     },
 
     // 在本地存储历史搜索记录

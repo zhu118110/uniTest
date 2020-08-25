@@ -29,13 +29,9 @@
 					placeholder="请填写验证码"
 					@input="phoneCode"
 				>
-					<u-button size="mini" slot="right" :disabled="!flag" @click="sendCode" :custom-style="tabbarColor"><text>{{ tips }}</text></u-button>
-					<u-verification-code 
-						:seconds="second" 
-						@change="codeChange"
-						@end="end"
-						ref="uCode" 
-						></u-verification-code>
+					<u-button size="mini" slot="right" :class="{'diabledStyle':yzmBtn}" :disabled="yzmBtn" @click="sendCode" :custom-style="tabbarColor">
+						<text>{{ tips }}</text>
+					</u-button>
 				</u-field>
 				<view class="tips">
 					<text style="color: #ccc;">温馨提示:未注册的手机号,登陆时会自动注册。如同意则勾选:</text>
@@ -45,7 +41,7 @@
 			
 			
 			<view class="btn">
-				<u-button @click="btn" class="custom-style" :disabled="btnDisabled" :custom-style="tabbarColor" :hair-line="false">提交</u-button>
+				<u-button @click="btn" class="custom-style" :class="{'diabledStyle':btnDisabled}" :disabled="btnDisabled" :custom-style="tabbarColor" :hair-line="false">登录</u-button>
 			</view>
 		</view>
 		
@@ -59,6 +55,7 @@
 </template>
 
 <script>
+	import {mapState,mapMutations} from "vuex"
 	export default{
 		name:"login",
 		data(){
@@ -75,8 +72,9 @@
 				agreen:false,  //是否同意协议
 				errorMessage:"", //手机号错误提示
 				flag:false, //验证手机号格式以及控制验证码框是否可点击输入值
+				yzmBtn:true,   //发送验证码按钮是否可以点击
 				second:10,   //验证码倒计时
-				tips:"",    
+				tips:"获取验证码",    
 				codeNum:"",   //发送的验证码
 				btnDisabled:true,   //登录按钮是否可以点击
 				showLoad:false,   //是否显示遮罩层
@@ -89,6 +87,7 @@
 		},
 		
 		methods:{
+			...mapMutations(["login"]),
 			// 手机号输入框失去焦点时触发
 			phoneBlur(){
 				// 验证手机号
@@ -96,39 +95,48 @@
 				this.flag=reg.test(parseInt(this.message.phone));
 				// 如果手机号格式不对,会出现提示信息,验证码按钮和输入框禁止使用
 				if(!this.flag){
+					this.yzmBtn=true;
 					this.errorMessage="手机号格式错误"
 				}else{
-					
+					this.yzmBtn=false;
 					this.errorMessage=""
 				}
 			},
 			// 点击发送验证码
 			sendCode(){
 				
-				if(this.$refs.uCode.canGetCode){
+					let _this=this;
+					_this.yzmBtn=true;
 					uni.showLoading({
 						title: '正在获取验证码'
 					})
+					
+					_this.codeNum=1000+Math.round(Math.random()*9000); 
 					setTimeout(() => {
 						uni.hideLoading();
 						// 这里此提示会被this.start()方法中的提示覆盖
-						this.$u.toast('验证码已发送');
-						// 通知验证码组件内部开始倒计时
-						this.$refs.uCode.start();
-						this.codeNum=1000+Math.round(Math.random()*9000); 
-						this.$u.toast('验证码是'+this.codeNum);
-						
+						_this.$u.toast('验证码已发送');
+						_this.$u.toast('验证码是'+_this.codeNum);
+					
+						djs()
 					}, 2000);
-				}
+					// 倒计时 ,模拟验证码倒计时发送
+					function djs(){
+						let _second=_this.second;
+						let timer=setInterval(()=>{
+							_second--;
+							_this.tips=_second+"秒后重新发送";
+							if(_second==0){
+								clearInterval(timer);
+								_this.tips="重新发送";
+								_this.yzmBtn=false;
+							}
+						},1000);
+						
+					}
+					
 			},
-			// 验证码倒计时过程中执行
-			codeChange(text){
-				this.tips=text
-			},
-			// 验证码倒计时结束后清零
-			end(){
-				this.codeNum=""
-			},
+			
 			// 输入验证码时触发
 			phoneCode(){
 				// 如果手机号格式正确,并且验证码输入框也输了内容, 提交按钮可以点击
@@ -150,11 +158,19 @@
 				}else{
 					this.showLoad=true;
 					let _this=this;
-					
+					let roundName=Math.ceil( Math.random()*100000000000 );  //生成随机用户名
+					let appUserInfo={
+						head_img:"/static/logo1.jpg",
+						name:"用户"+roundName
+					};
+					// 把随机用户名和头像通过vuex存到本地
+					_this.login(appUserInfo);
 					setTimeout(function(){
 						_this.showLoad=false;
 						_this.$u.toast('登录成功');
+						uni.navigateBack({})
 					},2000)
+					
 				}
 			}
 		}
@@ -168,13 +184,15 @@
 		height: 100vh;
 		display: flex;
 		justify-content:center;
-		align-items: center;
-		padding-top: 54px;
+	}
+	.diabledStyle{
+		// background-color: rgb(255,255,255,0.4);
+		opacity: 0.5;
 	}
 	// 登录区域
 	.loginArea{
 		width: 90%;
-		
+		margin-top: 200px;
 		.tab{
 			
 			text-align: center;

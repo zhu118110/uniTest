@@ -6,7 +6,9 @@
 			<!-- #ifdef MP-WEIXIN -->
 			<view class="wxLogin">
 				<view class="head_img">
-					<image :src="userInfor.avatarUrl"></image>
+					<image v-if="!userInfor.avatarUrl" src="../../static/logo.png"></image>
+					<image v-else :src="userInfor.avatarUrl"></image>
+					
 				</view>
 				<view class = "" :style="{'background-color':tabbarColor}">
 					<!-- #ifdef MP-WEIXIN -->
@@ -21,21 +23,28 @@
 			</view>
 			<!-- #endif -->
 			
-			<!-- h5,app登录区域 -->
+			<!-- h5,app用户头部 -->
 			<!-- #ifndef MP-WEIXIN -->
-				<view class="appLogin" @click="appLogin">
+				<view class="appLogin" >
 					<view class="appLogin_img">
-						<image :src="userInfor.avatarUrl"></image>
+						<image v-if="!userInfor.head_img" src="../../static/logo.png"></image>
+						<image v-else :src="userInfor.head_img"></image>
+						<!-- <image :src="userInfor.head_img"></image> -->
 					</view>
-					<view class="appLogin_name">
-						<view class="notLogin">
-							<view>
+					<view class="appLogin_name" @click="appLogin">
+						<view class="notLogin" >
+							
+							<view v-if="!userInfor.name">
 								登录或注册
+							</view>
+							<view v-else>
+								{{ userInfor.name }}
 							</view>
 							<view>
 								账号管理
 							</view>
 						</view>
+						
 						<view>
 							<u-icon name="arrow-right" color="#ccc"></u-icon>
 						</view>
@@ -99,12 +108,14 @@
 		</view>
 		
 		<!-- 遮罩层,小程序用户登录时显示loading动画 -->
+		<!-- #ifdef MP-WEIXIN -->
 		<u-mask :show="maskShow" :custom-style="{background: 'rgba(255, 255, 255, 0.5)'}">
 			<view class="load">
 				<u-loading :show="maskShow" mode="circle" size="50"></u-loading>
 					正在登录
 			</view>
 		</u-mask>
+		<!-- #endif -->
 	</view>
 </template>
 
@@ -127,10 +138,8 @@
 					text:"设置"
 				}],
 				tabbarColor:"#2a91d5",  //主题颜色
-				userInfor:{//小程序端用户信息
-					avatarUrl:"../../static/logo.png",
-					nickName: ""
-				},  
+				userInfor:{},  //小程序端用户信息
+				
 				maskShow:false
 			}
 		},
@@ -140,14 +149,14 @@
 		// 页面显示时监听 “更改主题” 页面事件，动态改变底部tabbar颜色
 		onShow() {
 			this.tabbarColor=this.$getMainColor().color;
-			// #ifdef MP-WEIXIN
+			// #ifdefsa MP-WEIXIN
 			let userInfor=uni.getStorageSync("userInfor");
 			if(userInfor){
-				this.userInfor.avatarUrl=userInfor.avatarUrl;
-				this.userInfor.nickName=userInfor.nickName;
+				// this.userInfor.avatarUrl=userInfor.avatarUrl;
+				this.userInfor=userInfor;
 				this.login(userInfor);
 			}
-			// #endif
+			// #sadendifasd
 		},
 		methods:{
 			/*
@@ -269,7 +278,7 @@
 	
 	.box{
 		width:100%;
-		height: 100%;
+		
 		box-sizing:border-box;
 	}
 	.tx(@width,@height){
@@ -338,7 +347,6 @@
 			}
 			.appLogin_name{
 				flex: 1;
-				
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
@@ -350,6 +358,7 @@
 					& view:first-child{
 						font-size: 18px;
 						font-weight: 800;
+						color: #fff;
 					}
 					& view:last-child{
 						color: #ccc;

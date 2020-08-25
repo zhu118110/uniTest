@@ -248,6 +248,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 8);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
   data: function data() {
@@ -266,9 +277,7 @@ var _vuex = __webpack_require__(/*! vuex */ 8);function ownKeys(object, enumerab
         text: "设置" }],
 
       tabbarColor: "#2a91d5", //主题颜色
-      userInfor: { //小程序端用户信息
-        avatarUrl: "../../static/logo.png",
-        nickName: "" },
+      userInfor: {}, //小程序端用户信息
 
       maskShow: false };
 
@@ -279,14 +288,14 @@ var _vuex = __webpack_require__(/*! vuex */ 8);function ownKeys(object, enumerab
   // 页面显示时监听 “更改主题” 页面事件，动态改变底部tabbar颜色
   onShow: function onShow() {
     this.tabbarColor = this.$getMainColor().color;
-
+    // #ifdefsa MP-WEIXIN
     var userInfor = uni.getStorageSync("userInfor");
     if (userInfor) {
-      this.userInfor.avatarUrl = userInfor.avatarUrl;
-      this.userInfor.nickName = userInfor.nickName;
+      // this.userInfor.avatarUrl=userInfor.avatarUrl;
+      this.userInfor = userInfor;
       this.login(userInfor);
     }
-
+    // #sadendifasd
   },
   methods: _objectSpread({
     /*

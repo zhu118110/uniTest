@@ -73,7 +73,7 @@
 	export default{
 		data(){
 			return{
-				searchMsg:"复仇者联盟",  //搜索字段
+				searchMsg:"",  //搜索字段
 				tabbarColor:{
 					backgroundColor:"#2a91d5"
 				},
@@ -148,13 +148,8 @@
 			},
 			// 清空历史搜索记录
 			clearHistorySearch(){
-				
-				uni.removeStorage({
-					key:"historySearch",
-					success() {
-						this.historySearch=[];
-					}
-				})
+				uni.removeStorageSync("historySearch")
+				this.historySearch=[];
 			},
 			
 			// 在本地存储历史搜索记录
