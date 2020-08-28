@@ -22,6 +22,22 @@ Vue.prototype.$getMainColor=function(){
 	})
 	return mainColor
 };
+// 封装GET请求
+Vue.prototype.$hhtpGet=function(params){
+	
+	return new Promise((resolve,reject)=>{
+		uni.request({
+			...params,
+			success(res) {
+				resolve(res)
+			},
+			fail(err) {
+				reject(err)
+			}
+		})
+	})
+},
+
 
 
 App.mpType = 'app'

@@ -7,7 +7,7 @@
 				<text>人人视频</text>
 			</view>
 		</u-navbar>
-		<view class="scrollView">
+		<!-- <view class="scrollView">
 			<scroll-view scroll-x="true" class="scroll_x" :scroll-left="scroll_left">
 				<view class="nav-item" 
 					v-for="(item,index) in scrollTitle" 
@@ -19,7 +19,7 @@
 		</view>
 		<view class="swiper">
 			
-			<swiper @change="touch" :current="scroll_index" duration="300" :style="{'height':siwperHeight+'px'}">
+			<swiper @change="touch" :current="scroll_index" duration="300">
 				<swiper-item>
 					
 						<jingxuan class="component" v-if="currentComponent == 'jingxuan'"></jingxuan>
@@ -47,6 +47,31 @@
 				</swiper-item>
 				
 			</swiper>
+		</view> -->
+		
+		<uni-segmented-control 
+			:current="scroll_index" 
+			:values=" scrollTitle.map(item=>item.title)" 
+			@clickItem="onClickItem" 
+			style-type="text" 
+			:active-color="tabbarColor.backgroundColor">
+		</uni-segmented-control>
+		<view class="content">
+			<view v-if="scroll_index === 0">
+				<jingxuan></jingxuan>
+			</view>
+			<view v-if="scroll_index === 1">
+				<juji></juji>
+			</view>
+			<view v-if="scroll_index === 2">
+				<dianying></dianying>
+			</view>
+			<view v-if="scroll_index === 3">
+				<dongman></dongman>
+			</view>
+			<view v-if="scroll_index === 4">
+				<zongyi></zongyi>
+			</view>
 		</view>
 	</view>
 </template>
@@ -57,10 +82,10 @@
 	import dianying from "./indexModule/dianying.vue"
 	import dongman from "./indexModule/dongman.vue"
 	import zongyi from "./indexModule/zongyi.vue"
+	import uniSegmentedControl from "@/components/uni-segmented-control/uni-segmented-control.vue"
 	export default {
 		data() {
 			return {
-				siwperHeight:1500,
 				currentComponent:"jingxuan",//默认当前页面加载的组件         
 				tabbarColor:{
 					backgroundColor:"#2a91d5"
@@ -92,7 +117,8 @@
 			}
 		},
 		components:{
-			jingxuan,juji,dianying,dongman,zongyi
+			jingxuan,juji,dianying,dongman,zongyi,
+			uniSegmentedControl
 		},
 		onShow(){
 			
@@ -101,12 +127,17 @@
 			
 		},
 		onReady() {
-			this.getPageHeight();
+			// this.getPageHeight();
 		},
 		methods: {
+			onClickItem(e) {
+				if (this.scroll_index !== e.currentIndex) {
+					this.scroll_index = e.currentIndex;
+				}
+			},
 			// 点击顶部滚动导航时执行
 			getItemIndex(i){
-				this.getPageHeight();
+				// this.getPageHeight();
 				let cur = i; //记录点击的导航的下标
 				let singleNavWidth = uni.getSystemInfoSync().windowWidth / 5; //每屏幕导航最多显示5个                
 				this.scroll_left = (cur - 2) * singleNavWidth;   //scroll_left控制移动的距离
@@ -131,12 +162,12 @@
 			},
 			
 			// 滑动swiper-item切换页面时动态设置swiper高度,否则每个页面高度都相同
-			async getPageHeight(){
+			 getPageHeight(){
 				
 				let _this = this;
 				_this.siwperHeight = 0;
 				const query = uni.createSelectorQuery().in(this);
-				await query.selectAll(".component").boundingClientRect(d=>{
+				query.selectAll(".component").boundingClientRect(d=>{
 					
 					_this.siwperHeight = Math.ceil(d[0].height);
 					

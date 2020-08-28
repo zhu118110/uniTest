@@ -1,8 +1,12 @@
 <template>
 	<view class="container">
-		<scroll-view 
+		<scroll-view class="scrollHeight" 
 			scroll-y="true" 
-			:refresher-enabled="false"
+			refresher-enabled="true"
+			:refresher-triggered="refresher"
+			@scrolltolower="scrolltolower"
+			@refresherrefresh="refresherpulling"
+			
 			>
 			<!-- 顶部轮播图 -->
 			<view class="header">
@@ -10,9 +14,8 @@
 					:indicator-dots="true" 
 					:interval="3000" 
 					:duration="500"
-					
 					>
-					<swiper-item v-for="item in headBanner" class="swiper-item">
+					<swiper-item v-for="(item,index) in headBanner" class="swiper-item">
 						
 							<image :src="item.imgSrc" mode=""></image>
 						
@@ -30,40 +33,32 @@
 			</view>
 			
 			<!-- 分类 -->
-			<view class="type">
+			<view class="type" v-for="(item,index) in videoType">
 				<view class="type_title">
-					<text>电影</text>
+					<text>{{ item.name }}</text>
 					<text>更多></text>
 				</view>
-				<list :movieData="movieData" style="padding: 0;"></list>
+				<list :movieData="item.dataList" :rate="true" style="padding: 0;"></list>
 			</view>
 			
-			<!-- 分类 -->
-			<view class="type">
+			<!-- 滚动到底部加载的数据显示区域 -->
+			<view class="loadData type">
 				<view class="type_title">
-					<text>电视剧</text>
-					<text>更多></text>
+					<text>猜你喜欢</text>
+					<text></text>
 				</view>
-				<list :movieData="tvData" style="padding: 0;"></list>
+				<list :movieData="loadPush">
+					
+				</list>
 			</view>
 			
-			<!-- 分类 -->
-			<view class="type">
-				<view class="type_title">
-					<text>综艺</text>
-					<text>更多></text>
-				</view>
-				<list :movieData="zyData" style="padding: 0;"></list>
-				
+			<!-- 滚动到底部显示的加载动画 -->
+			<view class="loading">
+				<u-loading mode="circle" :show="loading">记载中</u-loading>
 			</view>
-			<!-- 分类 -->
-			<view class="type">
-				<view class="type_title">
-					<text>动漫</text>
-					<text>更多></text>
-				</view>
-				<list :movieData="dmData" style="padding: 0;"></list>
-				
+			
+			<view class="loading" v-if="noData">
+				<u-loadmore status="暂无数据" />
 			</view>
 		</scroll-view>
 	</view>
@@ -76,13 +71,12 @@
 		
 		data(){
 			return {
-				
-				refresherEnabled:true,  //控制下拉刷新
+				refresher:false,
 				// 轮播图
 				headBanner:[{
-					imgSrc:"/static/lb1.jpg"
+					imgSrc:"/static/lb4.png"
 				},{
-					imgSrc:"/static/bd1.jpg"
+					imgSrc:"/static/lb2.jpg"
 				},{
 					imgSrc:"/static/lb3.png"
 				}],
@@ -107,226 +101,164 @@
 				videoType:[{
 					name:"每日必看",
 					dataList:[{
-						
 							type:"电影",
-							title:"港囧",
-							rate:8.5,//评分,
+							nm:"港囧",
+							sc:8.5,//评分,
+							cover:"/static/lb1.jpg"
+						},{
+							type:"电影",
+							nm:"无极",
+							sc:8.0,//评分
 							cover:"/static/bd1.jpg"
 						},{
 							type:"电影",
-							title:"无极",
-							rate:8.0,//评分
+							nm:"复仇者联盟一",
+							sc:8.5,//评分,
+							cover:"/static/lb2.jpg"
+						},{
+							type:"电影",
+							nm:"心花路放",
+							sc:8.0,//评分
 							cover:"/static/bd1.jpg"
 						},{
 							type:"电影",
-							title:"复仇者联盟一",
-							rate:8.5,//评分,
-							cover:"/static/bd1.jpg"
+							nm:"暗夜",
+							sc:8.0,//评分
+							cover:"/static/lb1.jpg"
 						},{
 							type:"电影",
-							title:"心花路放",
-							rate:8.0,//评分
-							cover:"/static/bd1.jpg"
-						},{
-							type:"电影",
-							title:"上海滩",
-							rate:8.0,//评分
-							cover:"/static/bd1.jpg"
-						},{
-							type:"电影",
-							title:"越狱",
-							rate:8.0,//评分
-							cover:"/static/bd1.jpg"
+							nm:"越狱",
+							sc:8.0,//评分
+							cover:"/static/lb3.png"
 						}
 					]
 				},{
 					name:"夏日高分",
 					dataList:[{
 							type:"电影",
-							title:"我是谁",
-							rate:8.5,//评分,
+							nm:"我是谁",
+							sc:8.5,//评分,
 							cover:"/static/bd1.jpg"
 						},{
 							type:"电影",
-							title:"真命天子",
-							rate:8.0,//评分
+							nm:"真命天子",
+							sc:8.0,//评分
 							cover:"/static/bd1.jpg"
 						},{
 							type:"电影",
-							title:"白蛇:缘起",
-							rate:8.5,//评分,
+							nm:"白蛇:缘起",
+							sc:8.5,//评分,
 							cover:"/static/bd1.jpg"
 						},{
 							type:"电影",
-							title:"极限挑战",
-							rate:8.0,//评分
+							nm:"极限挑战",
+							sc:8.0,//评分
 							cover:"/static/bd1.jpg"
 						},{
 							type:"电影",
-							title:"妙先生",
-							rate:8.0,//评分
+							nm:"妙先生",
+							sc:8.0,//评分
 							cover:"/static/bd1.jpg"
 						}
 					]
 				}],
 				movieData:null,   //电影数据
-				tvData:null,
-				zyData:null,
-				dmData:null
+				// 滚动到底部要加载的数据
+				loadData:[{
+					type:"电影",
+						nm:"港囧",
+						sc:8.5,//评分,
+						cover:"/static/bd1.jpg"
+					},{
+						type:"电影",
+						nm:"无极",
+						sc:8.0,//评分
+						cover:"/static/lb3.png"
+					},{
+						type:"电影",
+						nm:"复仇者联盟一",
+						sc:8.5,//评分,
+						cover:"/static/lb2.jpg"
+					},{
+						type:"电影",
+						nm:"心花路放",
+						sc:8.0,//评分
+						cover:"/static/bd1.jpg"
+				}],
+				loadPush:[{
+					type:"电影",
+					nm:"白蛇:缘起",
+					sc:8.5,//评分,
+					cover:"/static/bd1.jpg"
+				},{
+					type:"电影",
+					nm:"极限挑战",
+					sc:8.0,//评分
+					cover:"/static/bd1.jpg"
+				},{
+					type:"电影",
+					nm:"妙先生",
+					sc:8.0,//评分
+					cover:"/static/bd1.jpg"
+				}],
+				loading:false,
+				loadNum:1,
+				noData:false
 			}
 		},
 		components:{
 			list
 		},
 		created() {
-			// this.getAllMovie();
-			// this.getAllTv();
-			// this.getAllDm();
-			// this.getAllZy()
+		
 		},
 		mounted() {
-			console.log("精选")
-			
-			
 		},
-
+		
 		methods:{
-			/* 
-				电影列表接口1：'http://v.juhe.cn/movie/index?key='+apikeys.listKey+"&smode=0";
-				data:{
-					title=‘复’,
-					pagesize=6
-				},
-				success(res){
-					if(res.data.result)
-				}
-				
-			*/
-			/*
-				电影接口2:https://moview.douban.com/j/search_subjects
-				data:{
-					type:"movie",
-					tag:"热门",
-					page_limit:20,
-					page_start:0
-				}
-				header:{
-					'content-type':'json'
-				},
-				success(res){
-					if(res.data.subjects)
-				}
-			*/
 			getAllMovie(){
 				let _this=this;
-				// #ifndef H5
 				// let url='http://v.juhe.cn/movie/index?key='+apikeys.listKey+"&smode=0";
 				let url="https://m.maoyan.com/ajax/movieOnInfoList"
-				// #endif
-				
-				uni.request({
-					method:"GET",
-					url:url,
-					success(res) {
-						if(res.data.movieList){
-							_this.movieData=res.data.movieList;
-						
-						}
-					},
-					fail(err) {
-						console.log(err)
+				_this.$hhtpGet({
+					url
+				})
+				.then(res=>{
+					if(res.data.movieList){
+						_this.movieData=res.data.movieList;
+					}else{
+						_this.movieData=[]
 					}
 				})
+				.catch(err=>{
+					_this.$u.toast("网络连接失败")
+				})
 			},
-			getAllTv(){
+			// 下拉时触发
+			refresherpulling(){
+				this.refresher=true;
+				setTimeout(()=>{
+					this.refresher=false;
+					this.$u.toast("下拉刷新但是没有数据")
+				},1000)
+				
+			},
+			// 滑动到底部加载数据
+			scrolltolower(){
 				let _this=this;
-				// #ifndef H5
-				// let url='http://v.juhe.cn/movie/index?key='+apikeys.listKey+"&smode=0";
-				let url="https://movie.douban.com/j/search_subjects"
-				// #endif
+				console.log(_this.loadNum)
+				if(_this.loadNum>=5){
+					_this.noData=true;
+					return false
+				}
+				_this.loadNum+=1;
+				_this.loading=true;
+				setTimeout(function(){
+					_this.loadPush.push(..._this.loadData)
+					_this.loading=false
+				},1000)
 				
-				uni.request({
-					method:"GET",
-					url:url,
-					data:{
-						type:"tv",
-						tag:"热门",
-						page_limit:6,
-						page_start:0
-					},
-					header:{
-						'content-type':'json'
-					},
-					success(res) {
-						if(res.data.subjects){
-							_this.tvData=res.data.subjects
-							
-						}
-					},
-					fail(err) {
-						console.log(err)
-					}
-				})
-			},
-			getAllZy(){
-				let _this=this;
-				// #ifndef H5
-				// let url='http://v.juhe.cn/movie/index?key='+apikeys.listKey+"&smode=0";
-				let url="https://movie.douban.com/j/search_subjects"
-				// #endif
-				
-				uni.request({
-					method:"GET",
-					url:url,
-					data:{
-						type:"tv",
-						tag:"综艺",
-						page_limit:6,
-						page_start:0
-					},
-					header:{
-						'content-type':'json'
-					},
-					success(res) {
-						if(res.data.subjects){
-							_this.zyData=res.data.subjects
-							
-						}
-					},
-					fail(err) {
-						console.log(err)
-					}
-				})
-			},
-			getAllDm(){
-				let _this=this;
-				// #ifndef H5
-				// let url='http://v.juhe.cn/movie/index?key='+apikeys.listKey+"&smode=0";
-				let url="https://movie.douban.com/j/search_subjects"
-				// #endif
-				
-				uni.request({
-					method:"GET",
-					url:url,
-					data:{
-						type:"movie",
-						tag:"动漫",
-						page_limit:6,
-						page_start:0
-					},
-					header:{
-						'content-type':'json'
-					},
-					success(res) {
-						if(res.data.subjects){
-							_this.dmData=res.data.subjects
-						}
-					},
-					fail(err) {
-						console.log(err)
-					}
-				})
-			},
+			}
 		}
 		
 	}
@@ -336,6 +268,9 @@
 	view,image,swiper,swiper-item{
 		
 		box-sizing: border-box;
+	}
+	.scrollHeight{
+		height: calc( 100vh - 105px );
 	}
 	.container{
 		width: 100%;
@@ -410,5 +345,10 @@
 	.type .type_title text:last-child{
 		font-size: 12px;
 		color: #ccc;
+	}
+	
+	.loading{
+		display: flex;
+		justify-content: center;
 	}
 </style>

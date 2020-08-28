@@ -19,6 +19,7 @@
 
 <script>
 	export default{
+		name:"commentInput",
 		props:{
 			placeholder:{
 				type:String,

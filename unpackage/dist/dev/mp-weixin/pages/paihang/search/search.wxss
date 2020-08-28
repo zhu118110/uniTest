@@ -130,4 +130,12 @@ view.data-v-6e3d0c01{
 	padding: 10rpx 25rpx;
 	line-height: 1.5;
 }
+.loading.data-v-6e3d0c01{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+}
 

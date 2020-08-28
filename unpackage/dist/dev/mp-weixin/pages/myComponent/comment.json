@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "u-read-more": "/components/uview-ui/components/u-read-more/u-read-more",
-    "u-section": "/components/uview-ui/components/u-section/u-section"
+    "u-loading": "/components/uview-ui/components/u-loading/u-loading",
+    "comment-input": "/pages/myComponent/comment-input"
   },
   "component": true
 }

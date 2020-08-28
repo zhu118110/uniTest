@@ -1,0 +1,27 @@
+
+.scrollHeight.data-v-5a9dd69e{
+	height: calc( 100vh - 105px );
+}
+.container.data-v-5a9dd69e{
+	width: 100%;
+	padding: 0 10rpx;
+}
+.header.data-v-5a9dd69e{
+	width: 100%;
+	height: 400rpx;
+	margin: 10rpx 0;
+}
+.header swiper.data-v-5a9dd69e,.swiper-item.data-v-5a9dd69e{
+	width: 100%;
+	height: 100%;
+}
+.swiper-item.data-v-5a9dd69e{
+	border-radius: 20rpx;
+	overflow: hidden;
+}
+.swiper-item image.data-v-5a9dd69e{
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+

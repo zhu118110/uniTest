@@ -1,1 +1,1 @@
-<view class="_div">电影</view>
+<view class="container data-v-0f2c5c22"><scroll-view class="scrollHeight data-v-0f2c5c22" scroll-y="true" refresher-enabled="true" refresher-triggered="{{refresher}}" data-event-opts="{{[['scrolltolower',[['scrolltolower',['$event']]]],['refresherrefresh',[['refresherpulling',['$event']]]]]}}" bindscrolltolower="__e" bindrefresherrefresh="__e"></scroll-view></view>

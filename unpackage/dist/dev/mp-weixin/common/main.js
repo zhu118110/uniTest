@@ -31,6 +31,22 @@ _vue.default.prototype.$getMainColor = function () {
 
   return mainColor;
 };
+// 封装GET请求
+_vue.default.prototype.$hhtpGet = function (params) {
+
+  return new Promise(function (resolve, reject) {
+    uni.request(_objectSpread({},
+    params, {
+      success: function success(res) {
+        resolve(res);
+      },
+      fail: function fail(err) {
+        reject(err);
+      } }));
+
+  });
+},
+
 
 
 _App.default.mpType = 'app';

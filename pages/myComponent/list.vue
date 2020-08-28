@@ -3,22 +3,28 @@
 	<view class="container">
 		<view class="list-box">
 			<view class="list-item" v-for="(item,index) in movieData" @click="toDetail(index)">
-				<view >
-					<u-image src="/static/bd1.jpg" height='270rpx' width="100%">
+				<view class="list-item_img">
+					<u-image :src="item.cover" height='270rpx' width="100%">
 						<u-loading slot="loading"></u-loading>
 						<view slot="error" style="font-size: 24rpx;">加载失败</view>
 					</u-image>
+					
+					<!-- 电视剧的集数 -->
+					<view class="episodes" v-if="episodes">
+						更新至第{{ item.episodeNum || 1}}集
+					</view>
 				</view>
 				<view class="title">
 					{{item.nm}}
 				</view>
-				<view class="rate">
-					<uniRate :max="5" readonly :allowHalf="true" :value="item.sc/2" size="14"></uniRate>
+				<!-- 电影评分 -->
+				<view class="rate" v-if="rate">
+					<uniRate :max="5" readonly :allowHalf="true" :value="item.sc/2 " size="14"></uniRate>
 					<text style="color: #ccc;font-size: 12px;">
-						{{item.sc}}
+						{{item.sc | sc}}
 					</text>
 				</view>
-					
+				
 			</view>
 		</view>
 	</view>
@@ -28,12 +34,29 @@
 	import uniRate from "@/components/uni-rate/uni-rate.vue"
 	export default{
 		props:{
+			// 父组件传递的数据,
 			movieData:{
 				type:Array
-			}
+			},
+			// 是否显示电影评分()
+			rate:{
+				type:Boolean,
+				default:false
+			},
+			// 是否显示电视剧集数
+			episodes:{
+				type:Boolean,
+				default:false
+			},
 		},
 		components:{
 			uniRate
+		},
+		filters:{
+			// 过滤评分,保留一位小数
+			sc(rate){
+				return rate.toFixed(1)
+			}
 		},
 		data(){
 			
@@ -109,12 +132,22 @@
 		font-size: 28rpx;
 		border-radius: 10rpx;
 		overflow: hidden;
+		
 	}
-	
+	.list-box .list-item .list-item_img{
+		position: relative;
+	}
 	.list-box .list-item image{
 		width: 100%;
 		
 		display: block;
+	}
+	.list-box .list-item .list-item_img .episodes{
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		color: #fff;
+		font-size: 12px;
 	}
 	.list-box .list-item .title{
 		margin-top: 10rpx;
@@ -123,10 +156,13 @@
 		text-overflow: ellipsis;
 		line-clamp: 1;
 	}
+	/* 评分 */
 	.list-box .list-item .rate{
 		display: flex;
 		justify-content: space-between;
 		width: 100%;
 		padding: 0 10rpx;
 	}
+	
+	
 </style>

@@ -7,118 +7,102 @@
 			
 		</u-mask> -->
 		<u-navbar title="人人视频" :background="tabbarColor"></u-navbar>
-		<!-- <u-sticky offset-top="140"  style="background-color: #fff;"> -->
-			<view class="fixed">
-				<!-- 视频播放区域 -->
-				<view class="videoArea">
-					<video 
-						id="myVideo"
-						style="width: 100%;"
-						src="http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/28742df34564972819219071568/v.f210.m3u8" 
-						poster="/static/bd1.jpg"
-						:title="name"
-						controls
-						object-fit="fill"
-						:danmu-list="danmuList"
-						:enable-danmu="false"
-						:enable-play-gesture="true"
-						:initial-time="20"
-						@pause="pause"
-						@play="play"
-					>
-						<cover-view v-if="paused" class="video-cover-view" @click="hideCover">
-							<cover-view class="iconfont" :class="[paused?'icon-zanting':'icon-icon_bofang']"></cover-view>
-						</cover-view>
-						
-					</video>
+		
+		
+		<!-- 视频播放区域 -->
+		<view class="fixed">
+			<view class="videoArea">
+				<video 
+					id="myVideo"
+					style="width: 100%;"
+					src="http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/28742df34564972819219071568/v.f210.m3u8" 
+					poster="/static/bd1.jpg"
+					
+					controls
+					object-fit="fill"
+					:danmu-list="danmuList"
+					:enable-danmu="false"
+					:enable-play-gesture="true"
+					@pause="pause"
+					@play="play"
+				>
+					<cover-view v-if="paused" class="video-cover-view" @click="hideCover">
+						<cover-view class="iconfont" :class="[paused?'icon-zanting':'icon-icon_bofang']"></cover-view>
+					</cover-view>
+					
+				</video>
+			</view>
+			<view class="tag">
+				<view class="intro" :class="{'tag-active':tagActive}" @click="choossetag(true)">
+					简介
 				</view>
-				<view class="tag">
-					<view class="intro" :class="{'tag-active':tagActive}" @click="choossetag(true)">
-						简介
-					</view>
-					<view class="comment" :class="{'tag-active':!tagActive}" @click="choossetag(false)">
-						评论
-					</view>
+				<view class="comment" :class="{'tag-active':!tagActive}" @click="choossetag(false)">
+					评论
 				</view>
 			</view>
-		<!-- </u-sticky> -->
+		</view>
 		
-		<!-- 简介区域 -->
-		<view v-show="tagActive" class="introArea">
-			<!-- 影片详情 -->
-			<scroll-view scroll-y="true" :style="{'height':height}">
-				<view class="detail">
-					<u-collapse style="width: 100%;">
-						<u-collapse-item :title="moviewInfor.name" >
-							<view>
-								<view>导演:{{ moviewInfor.dir }}</view>
-								<view>类型:{{ moviewInfor.tag }}</view>
-								<view style="text-indent: 1cm;">{{ moviewInfor.desc }}</view>	
-							</view>
-							
-						</u-collapse-item>
-					</u-collapse>
-				</view>
-					
-				<!-- 收藏点赞区域 -->
-				<view class="collectArea">
-					<view>
-						<text class="iconfont icon-dianzan"></text>
-						<text>25</text>
-					</view>	
-					<view >
-						<text class="iconfont icon-caishixin-"></text>
-						<text>10</text>
-					</view>	
-					<view>
-						<text class="iconfont icon-shoucang2"></text>
-						<text>收藏</text>
-					</view>
-					<view>
-						<text class="iconfont icon-tubiao-"></text>
-						<text>分享</text>
-					</view>	
-				</view>
-					
-				<u-gap height="20" bg-color="#f8f8f8"></u-gap>
+		<!-- 简介 -->
+		<view class="scrollArea" v-show="tagActive">
+			<scroll-view scroll-y="true" :style="{'height':height}" >
 				
-				<!-- 猜你喜欢 -->
-				<view class="like">
-					<like :likeData="likeData"></like>
-				</view>
-			
-			</scroll-view>
-		</view>
-		
-		<!-- 评论区域 -->
-		<view v-show="!tagActive" class="commentTab" >
-			<scroll-view scroll-y="true" :style="{'height':plHeight}">
-				<comment @showReplyPop="showReplyPop" :commentData="commentData"></comment>
-				<!-- 回复详情弹出层 -->
-				<u-popup 
-					v-model="replyPopUp" 
-					mode="bottom" 
-					length="50%" 
-					:mask="false"
-					:mask-close-able="false"
-					>
-					<view class="replyPopUp">
-						<replyPopUp :commentList="replyData" @hideProp="hideProp"></replyPopUp>
+				<view class="introArea" >
+					<view class="detail">
+						<u-collapse style="width: 100%;">
+							<u-collapse-item :title="moviewInfor.name" >
+								<view>
+									<view>导演:{{ moviewInfor.dir }}</view>
+									<view>类型:{{ moviewInfor.tag }}</view>
+									<view style="text-indent: 1cm;">{{ moviewInfor.desc }}</view>	
+								</view>
+								
+							</u-collapse-item>
+						</u-collapse>
 					</view>
-				</u-popup>
-			</scroll-view>
-			<u-mask :show="showLoad" :mask-click-able="false" :custom-style="{background: 'rgba(255, 255, 255, 0.5)',height:'inherit'}">
-				<view class="loading">
-					<u-loading :show="showLoad" :color="tabbarColor"></u-loading>
+
+					<!-- 收藏点赞区域 -->
+					<view class="collectArea">
+						<view>
+							<text class="iconfont icon-dianzan"></text>
+							<text>25</text>
+						</view>	
+						<view >
+							<text class="iconfont icon-caishixin-"></text>
+							<text>10</text>
+						</view>	
+						<view>
+							<text class="iconfont icon-shoucang2"></text>
+							<text>收藏</text>
+						</view>
+						<view>
+							<text class="iconfont icon-tubiao-"></text>
+							<text>分享</text>
+						</view>	
+					</view>
+					
+					<!-- 猜你喜欢 -->
+					<view class="like">
+						
+							<like></like>
+						
+						
+					</view>
+					
 				</view>
-			</u-mask>
-			
-			
-			<!-- 底部评论输入框 -->
-			<commentInput @search="getCommentMsg"></commentInput>
+				
+				
+			</scroll-view>
 		</view>
+		<!-- 评论 -->
+		<view v-show="!tagActive">
 		
-		
+			<view class="commentArea">
+				<comment :height="height"></comment>
+			
+			</view>
+			
+		</view>
+
 	</view>	
 </template>
 
@@ -129,7 +113,9 @@
 	import commentInput from "../myComponent/comment-input.vue"  //输入评论框
 	import keys from "../../api/api.js"
 	export default{
+		name:"detail",
 		data(){
+			
 			return{
 				id:"",
 				tabbarColor:{
@@ -159,17 +145,17 @@
 				    color: '#fff',
 				    time: 6
 				}],
+				showNumber:5,
 				comment:"",   //评论内容
-                tagActive:true,   
+                tagActive:false,   
 				replyPopUp:false,
 				replyData:[],
 				commentData:{commentMsg:"",name:"用户",commentTime:"2020-8-23"},
 				height:"",
-				plHeight:""
 			}
 		},
 		onReady() {
-			this.videoText=uni.createVideoContext("myVideo");
+			
 			
 		},
 		components:{
@@ -180,7 +166,7 @@
 		},
 		onLoad(options) {
 			// this.id=options.id;
-			this.moviewInfor.name=options.name||"暂无";
+			options.name?this.moviewInfor.name=options.name:"暂无";
 			this.moviewInfor.coverImg=options.cover;
 			this.getVideo();
 			
@@ -188,32 +174,28 @@
 		onShow(){
 			// 从本地存储获取主题色
 			this.tabbarColor.backgroundColor=this.$getMainColor().color||""
+			this.videoText=uni.createVideoContext("myVideo");
 			
 		},
 		onReady() {
-			this.getHeight(".fixed",this.height);
-			this.getHeight(".commentTab",this.plHeight);
+			// 设置滚动区域高度
+			this.getHeight();
 			
 		},
 		methods:{
-			getHeight(ele,height){
+			getHeight(ele){
 				let _this=this;
 				let pageHeight="";
 				let queryHeight="";
-				let page=uni.getSystemInfo({
-					success(data) {
-						pageHeight = data.windowHeight
-					}
-				})
+				let page=uni.getSystemInfoSync();
+				pageHeight=page.windowHeight;  //获取窗口高度
 				let query=uni.createSelectorQuery().in(this);
-				query.select(ele).boundingClientRect(res=>{
-					console.log(res)
-					queryHeight=parseInt(res.height);
-				}).exec(a=>{
-					console.log(pageHeight,queryHeight)
-					height=(pageHeight-queryHeight)*2+"rpx"
+				query.select(".fixed").boundingClientRect(res=>{
 					
-				})
+					queryHeight=parseInt(res.height);
+					_this.height=(pageHeight-queryHeight-res.top)*2+"rpx"
+					
+				}).exec()
 				
 			},
 			
@@ -265,45 +247,47 @@
 				this.tagActive=flag;
 				
 			},
+			
+			
 			/*
 				点击某条评论显示回复的详细内容
 				@params{Object}data:子组件comment点击的评论的信息,包括回复的内容、时间、名称
 			*/
-			showReplyPop(data){
-				this.replyData=[];
-				if(data){
+			// showReplyPop(data){
+			// 	this.replyData=[];
+			// 	if(data){
 					
-					if(!data.reply){
-						// console.log("没有值")
-						data.reply=[]
-					}
-					this.replyPopUp=true;
-					this.replyData.push(data);
+			// 		if(!data.reply){
+			// 			// console.log("没有值")
+			// 			data.reply=[]
+			// 		}
+			// 		this.replyPopUp=true;
+			// 		this.replyData.push(data);
 					
-				}
+			// 	}
 				
-			},
+			// },
 			
 			// 回复页面点击右上角x关闭页面
-			hideProp(hide){
-				this.replyPopUp=hide;
+			// hideProp(hide){
+			// 	this.replyPopUp=hide;
 				
-			},
+			// },
 			
 			// 从底部子组件输入框组件获取输入的评论赋值给_this.commentData.commentMsg，
 			// 再将_this.commentData.commentMsg输入的评论数据传给评论组件
-			getCommentMsg(data){
-				let _this=this;
-				if(data){
-					_this.commentData.commentMsg=data;
-					_this.showLoad=true;
-					setTimeout(function(){
-						_this.showLoad=false;
-					},1000)
-				}
+			// getCommentMsg(data){
+			// 	let _this=this;
+			// 	if(data){
+			// 		_this.commentData.commentMsg=data;
+			// 		_this.showLoad=true;
+			// 		setTimeout(function(){
+			// 			_this.showLoad=false;
+			// 		},1000)
+			// 	}
 				
-				// console.log(data)
-			}
+			// 	// console.log(data)
+			// }
 		
 			
 		
@@ -397,13 +381,11 @@
 		color: #c1c1c1;
 	}
 	
-	.like{
+	.like,.commentArea{
 		padding: 0 10rpx;
-		margin: 10rpx 0;
+		
 	}
-	.commentTab,.replyPopUp{
-		padding: 0 10rpx;
-	}
+	
 	
 	.loading{
 		width: 100%;

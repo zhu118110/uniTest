@@ -3,6 +3,9 @@ view.data-v-d7619eee,image.data-v-d7619eee,swiper.data-v-d7619eee,swiper-item.da
 	
 	box-sizing: border-box;
 }
+.scrollHeight.data-v-d7619eee{
+	height: calc( 100vh - 105px );
+}
 .container.data-v-d7619eee{
 	width: 100%;
 	padding: 0 10rpx;
@@ -77,5 +80,13 @@ view.data-v-d7619eee,image.data-v-d7619eee,swiper.data-v-d7619eee,swiper-item.da
 .type .type_title text.data-v-d7619eee:last-child{
 	font-size: 12px;
 	color: #ccc;
+}
+.loading.data-v-d7619eee{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
 }
 

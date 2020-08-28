@@ -149,14 +149,13 @@
 		// 页面显示时监听 “更改主题” 页面事件，动态改变底部tabbar颜色
 		onShow() {
 			this.tabbarColor=this.$getMainColor().color;
-			// #ifdefsa MP-WEIXIN
+			
 			let userInfor=uni.getStorageSync("userInfor");
 			if(userInfor){
-				// this.userInfor.avatarUrl=userInfor.avatarUrl;
 				this.userInfor=userInfor;
 				this.login(userInfor);
 			}
-			// #sadendifasd
+		
 		},
 		methods:{
 			/*
@@ -170,11 +169,11 @@
 				})
 			},
 			
-			// 分享事件
+			//// app端调用分享
+			// #ifdef APP-PLUS
 			share(){
 				let _this=this;
-				// app端调用分享
-				// #ifdef APP-PLUS
+				
 					uni.shareWithSystem({
 						summary:"我在追美剧,你也快来吧",
 						href:"http://www.baidu.com",
@@ -191,10 +190,8 @@
 							})
 						}
 					})
-					
-					
-				// #endif
 			},	
+			// #endif
 			// 微信端点击右上角调用分享功能
 			onShareAppMessage(res){
 				if(res){
@@ -258,14 +255,14 @@
 			},
 			// #endif
 			
+			// #ifndef MP-WEIXIN
 			// app\h5点击登录跳转到登陆页面
 			appLogin(){
 				uni.navigateTo({
 					url:"./login/login"
 				})
 			},
-			
-			
+			// #endif
 			...mapMutations(["login"])
 		},
 		watch:{

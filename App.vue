@@ -36,7 +36,7 @@
 		height: 100%;
 		
 	}
-	view,text,image{
+	view,text,image,scroll-view{
 		box-sizing: border-box;
 	}
 	.status_bar {

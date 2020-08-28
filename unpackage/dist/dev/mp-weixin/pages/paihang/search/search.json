@@ -2,6 +2,7 @@
   "navigationStyle": "custom",
   "usingComponents": {
     "u-navbar": "/components/uview-ui/components/u-navbar/u-navbar",
-    "u-search": "/components/uview-ui/components/u-search/u-search"
+    "u-search": "/components/uview-ui/components/u-search/u-search",
+    "u-loading": "/components/uview-ui/components/u-loading/u-loading"
   }
 }

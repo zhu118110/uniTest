@@ -1,4 +1,7 @@
 {
-  "usingComponents": {},
-  "component": true
+  "component": true,
+  "usingComponents": {
+    "list": "/pages/myComponent/list",
+    "scrolllist": "/pages/myComponent/type-scroll"
+  }
 }

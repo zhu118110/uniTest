@@ -35,7 +35,7 @@
 				</view>
 				<view class="historSearch">
 					<block v-for="(item,index) in historySearch" :key="index">
-						<view class="historSearchItem">
+						<view class="historSearchItem" @click="searchHistoryData(index)">
 							{{ item }}
 						</view>
 					</block>
@@ -44,7 +44,11 @@
 			</view>
 		<!-- 搜索结果 -->
 		<view class="searchResult" v-else="!seacrListShow">
+			<view class="loading">
+				<u-loading mode="circle" :show="load"></u-loading>
+			</view>
 			<block  v-if="result.length>0">
+				
 				<view class="resultItem" v-for="(item,index) in result" :key="index" @click="toDetail(index)">
 					<view class="resultItem-img">
 						<image :src="item.cover" mode=""></image>
@@ -57,8 +61,9 @@
 					</view>
 				</view>
 			</block>
-			<view v-else>
-				暂无资源
+			<!--  -->
+			<view v-else-if="result.length==0 && load==false">
+				暂无数据
 			</view>
 		</view>
 		
@@ -84,7 +89,7 @@
 				historySearch:[],     //历史搜索
 				result:[],
 				seacrListShow:true,  //true时显示历史搜索,false时显示搜索结果
-				
+				load:false,
 			}
 		},
 		
@@ -108,42 +113,30 @@
 				@params{String} name: 搜索的电影名称
 			*/
 			goSearch(name){
-				
 				if(name==""){
 					return
 				}
 				let _this=this;
 				_this.result=[];
 				_this.searchMsg=name;
-			
-				uni.request({
-					url:"http://api.avatardata.cn/Movie/Query?key="+keys.detailKey,
-					data:{
+				_this.load=true;
+				_this.seacrListShow=false
+				this.$hhtpGet("http://api.avatardata.cn/Movie/Query?key="+keys.detailKey,{
 						name:name
-					},
-					success(res){
-						if(res.data.result){
-							_this.seacrListShow=false
-							_this.result.push(res.data.result)
-							
-						}else{
-							_this.result=[];
-							_this.seacrListShow=false;
-						}
-					},
-					fail(err) {
-						_this.result=[];
-						_this.seacrListShow=false;
-					},
-					complete() {
-						// 历史搜索记录超过5条删除最后一条
-						_this.historySearch.unshift(name);
-						if(_this.historySearch.length>=5){
-							_this.historySearch.pop()
-						}
-						_this.historySession()  //历史搜索记录存到本地
-						
+				}).then(result=>{
+					if(result.data.result){
+						_this.result.push(result.data.result)
 					}
+					// 历史搜索记录超过5条删除最后一条
+					_this.load=false
+					_this.historySearch.unshift(name);
+					if(_this.historySearch.length>=5){
+						_this.historySearch.pop()
+					}
+					_this.historySession()  //历史搜索记录存到本地
+				})
+				.catch(err=>{
+					console.log(err)
 				})
 			},
 			// 清空历史搜索记录
@@ -152,19 +145,23 @@
 				this.historySearch=[];
 			},
 			
-			// 在本地存储历史搜索记录
+			// 每次搜索完后在本地存储历史搜索记录
 			historySession(){
 				let _this=this;
 				uni.setStorageSync("historySearch",_this.historySearch)
 			},
-			
-			// 携带点击的电影名称跳转到详情页
+			// 点击历史记录里的数据进行搜索
+			searchHistoryData(index){
+				this.searchMsg=this.historySearch[index];
+				this.goSearch(this.searchMsg);
+			},
+			// 点击搜索出来的电影名称跳转到详情页,参数是电影名称和电影的封面图
 			toDetail(index){
 				let _this=this;
 				uni.navigateTo({
 					url:"../../detail/detail?name="+_this.result[index].title+"&cover="+_this.result[index].cover,
 				})
-			}
+			},
 		},
 		
 	}
@@ -279,5 +276,9 @@
 		border-radius: 10rpx;
 		padding: 10rpx 25rpx;
 		line-height: 1.5;
+	}
+	.loading{
+		display: flex;
+		justify-content: center;
 	}
 </style>

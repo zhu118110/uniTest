@@ -17,7 +17,9 @@
             "delay" : 0
         },
         /* 模块配置 */
-        "modules" : {},
+        "modules" : {
+            "VideoPlayer" : {}
+        },
         /* 应用发布信息 */
         "distribute" : {
             /* android打包配置 */
@@ -45,12 +47,20 @@
                     "<uses-feature android:name=\"android.hardware.camera\"/>",
                     "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
-                ]
+                ],
+                "abiFilters" : [ "armeabi-v7a" ]
             },
             /* ios打包配置 */
             "ios" : {},
             /* SDK配置 */
-            "sdkConfigs" : {}
+            "sdkConfigs" : {
+                "share" : {
+                    "weixin" : {
+                        "appid" : "",
+                        "UniversalLinks" : ""
+                    }
+                }
+            }
         }
     },
     /* 快应用特有相关 */
@@ -74,24 +84,28 @@
     "mp-toutiao" : {
         "usingComponents" : true
     },
-	"h5": {
-		"devServer": {
-			"port" : 8080, //端口号
-			"disableHostCheck" : true,
-			"proxy" : {
-				"/listApi" : {
-					"target" : "http://v.juhe.cn/movie/index", //视频列表接口域名
-					"changeOrigin" : true,  //是否跨域
-				    "secure" : false,  // 设置支持https协议的代理
-					"pathRewrite" : {"^/listApi" : ""}
-				},
-				"/detailApi":{
-					"target" : "http://api.avatardata.cn/Movie/Query", //视频详情接口域名
-					"changeOrigin" : true,  //是否跨域
-					"secure" : false,  // 设置支持https协议的代理
-					"pathRewrite" : {"^/detailApi" : ""}
-				}
-			}
-		}
-	}
+    "h5" : {
+        "devServer" : {
+            "port" : 8080, //端口号
+            "disableHostCheck" : true,
+            "proxy" : {
+                "/listApi" : {
+                    "target" : "http://v.juhe.cn/movie/index", //视频列表接口域名
+                    "changeOrigin" : true, //是否跨域
+                    "secure" : false, // 设置支持https协议的代理
+                    "pathRewrite" : {
+                        "^/listApi" : ""
+                    }
+                },
+                "/detailApi" : {
+                    "target" : "http://api.avatardata.cn/Movie/Query", //视频详情接口域名
+                    "changeOrigin" : true, //是否跨域
+                    "secure" : false, // 设置支持https协议的代理
+                    "pathRewrite" : {
+                        "^/detailApi" : ""
+                    }
+                }
+            }
+        }
+    }
 }

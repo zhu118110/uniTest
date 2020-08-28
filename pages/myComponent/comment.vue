@@ -2,58 +2,71 @@
 
 <template>
 	<view class="container">
-		<view class="">热门评论({{commentList.length}})</view>
-		<!-- 评论列表 -->
-		<view class="comment-list">
-			<view class="comment-item" v-for="(item,index) in commentList" :key="index" @click="lookMore(index)">
-				<!-- 左边用户头像 -->
-				<view class="comment-item-img">
-					<image src="../../static/logo1.jpg" mode=""></image>
-				</view>
-				<!-- 右边用户名称日期、评论内容 -->
-				<view class="comment-item-infor">
-					<view class="nameAndTime">
-						<view class="name">{{ item.name }}</view>
-						<view class="time">{{ item.commentTime }}</view>
+		<scroll-view scroll-y="true" :style="{'height':height}" style="padding-bottom: 44px;" @scrolltolower="commentScrolltolower">
+			<view class="">热门评论({{20}})</view>
+			<!-- 评论列表 -->
+			<view class="comment-list">
+				<view class="comment-item" v-for="(item,index) in commentList" :key="index" @click="lookMore(index)">
+					<!-- 左边用户头像 -->
+					<view class="comment-item-img">
+						<image src="../../static/logo1.jpg" mode=""></image>
 					</view>
-					<u-read-more show-height="180" :toggle="true">
-						<text>
-							<!-- 评论评论评论评论评论评论评论评论评论评论
-							评论评论评论评论评论评论
-							评论评论评论评论评论评论评论评论评论
-							评论评论评论评论评论评论评论 -->
-							{{ item.commentMsg }}
-						</text>
-					</u-read-more>
-					<view class="replyArea" v-if="item.reply.length>0">
-						<view class="replyItem" v-for="(replyItem,replyIndex) in item.reply" v-if="replyIndex<3">
-							<text>{{replyItem.replyUser}}</text> : {{ replyItem.replyMsg }}
+					<!-- 右边用户名称日期、评论内容 -->
+					<view class="comment-item-infor">
+						<view class="nameAndTime">
+							<view class="name">{{ item.name }}</view>
+							<view class="time">{{ item.commentTime }}</view>
 						</view>
-						<u-section class="uSection"
-							v-if="item.reply.length>3"
-							sub-title="更多" 
-							:show-line="false" 
-							color="#000" 
-							:bold="false"
-							@click="lookMore(index)"
-							>
-						</u-section>
+						<u-read-more show-height="180" :toggle="true">
+							<text>
+								<!-- 评论评论评论评论评论评论评论评论评论评论
+								评论评论评论评论评论评论
+								评论评论评论评论评论评论评论评论评论
+								评论评论评论评论评论评论评论 -->
+								{{ item.commentMsg }}
+							</text>
+						</u-read-more>
+						<!-- <view class="replyArea" v-if="item.reply.length>0">
+							<view class="replyItem" v-for="(replyItem,replyIndex) in item.reply" :key="replyIndex" v-if="replyIndex<3">
+								<text>{{replyItem.replyUser}}</text> : {{ replyItem.replyMsg }}
+							</view>
+							<u-section class="uSection"
+								v-if="item.reply.length>3"
+								sub-title="更多" 
+								:show-line="false" 
+								color="#000" 
+								:bold="false"
+								@click="lookMore(index)"
+								>
+							</u-section>
+						</view> -->
+						
 					</view>
-					
 				</view>
 			</view>
-		</view>
+			<view class="loading">
+				<u-loading mode="circle" :show="load"></u-loading>
+			</view>
+			
+		</scroll-view>
+		<commentInput></commentInput>
 	</view>
 </template>
 
 <script>
+	import commentInput from "./comment-input.vue"  //输入评论框
 	export default{
+		name:"comment",
 		props:{
 			
-			"commentData":{
-				type:Object,
-				default:{}
-			}
+			"height":{
+				type:String,
+				default:300
+			},
+			
+		},
+		components:{
+			commentInput
 		},
 		data(){
 			return{
@@ -91,10 +104,17 @@
 					name:"洛基",
 					commentMsg:"开美颜了吧",
 					commentTime:"2020-8-20",
-					
-				}]
+				},],
+				mockList:{
+					name:"卷福",
+					commentMsg:"没头发的才好看",
+					commentTime:"2020-8-20",
+				},
+				showNumber:5,
+				load:false
 			}
 		},
+		
 		methods:{
 			// 点击回复内容进入回复详情页
 			/*
@@ -105,17 +125,28 @@
 				// console.log(this.commentList[index])
 				this.$emit("showReplyPop",this.commentList[index])
 			},
+			// 评论滚动到底部触发
+			commentScrolltolower(){
+				let _this=this;
+				_this.showNumber+=5;
+				_this.load=true;
+				if(_this.showNumber>=20){
+					_this.load=false;
+					return false;
+				}
+				setTimeout(function(){
+					
+					for(let i=0;i<5;i++){
+						_this.commentList.push(_this.mockList);
+					}
+					_this.load=false;
+				},2000)
+				
+			},
 			
 		},
 		
-		watch:{
-			"commentData":{
-				handler:function(nVal,oVal){
-					this.commentList.push(nVal)
-				},
-				deep:true
-			}
-		}
+		
 	}
 </script>
 
@@ -126,11 +157,14 @@
 		border-bottom: 1rpx solid #f1f1f1;
 	}
 	.container{
-		padding: 10rpx 0 44px;
+		// padding: 10rpx 0 0;
+		height: 100%;
 		width: @width; 
+		
 	}
 	.comment-list{
-		// margin-top: 20rpx;
+		
+		height: 100%;
 	}
 	.comment-item{
 		display: flex;
@@ -139,6 +173,9 @@
 		padding: 20rpx 0;
 		width: 100%;
 		.border;
+		&:last-child{
+			border: none;
+		}
 		.comment-item-img{
 			
 			width: 80rpx;
@@ -186,11 +223,15 @@
 						color: #b1b1b1;
 					}
 				}
-				.uSection{
-					
-				}
-				
 			}
 		}
+
+	}
+	.loading{
+		width: 100%;
+		
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 </style>

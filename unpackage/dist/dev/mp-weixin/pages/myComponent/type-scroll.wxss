@@ -1,0 +1,16 @@
+.container.data-v-1a4570f9 {
+  width: 100%;
+}
+.scroll.data-v-1a4570f9 {
+  white-space: nowrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+.scrollList-item.data-v-1a4570f9 {
+  padding: 10px 20px;
+  display: inline-block;
+  color: #fff;
+  margin: 0 10px;
+  border-radius: 5px;
+}
+
