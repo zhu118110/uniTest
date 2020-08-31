@@ -17,19 +17,25 @@
 					style="width: 100%;"
 					src="http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/28742df34564972819219071568/v.f210.m3u8" 
 					poster="/static/bd1.jpg"
-					
-					controls
+					:controls="true"
 					object-fit="fill"
 					:danmu-list="danmuList"
 					:enable-danmu="false"
 					:enable-play-gesture="true"
 					@pause="pause"
 					@play="play"
+					@controlstoggle="controlstoggle"
+					@fullscreenchange="fullscreenchange"
 				>
+					<!-- 视频暂停时显示的暂停播放按钮 -->
 					<cover-view v-if="paused" class="video-cover-view" @click="hideCover">
 						<cover-view class="iconfont" :class="[paused?'icon-zanting':'icon-icon_bofang']"></cover-view>
 					</cover-view>
-					
+					<!-- 全屏时显示下载、分享等按钮样式 -->
+					<cover-view class="fullScreenView">
+						
+						遮罩层
+					</cover-view>
 				</video>
 			</view>
 			<view class="tag">
@@ -82,15 +88,9 @@
 					
 					<!-- 猜你喜欢 -->
 					<view class="like">
-						
 							<like></like>
-						
-						
 					</view>
-					
 				</view>
-				
-				
 			</scroll-view>
 		</view>
 		<!-- 评论 -->
@@ -147,11 +147,14 @@
 				}],
 				showNumber:5,
 				comment:"",   //评论内容
-                tagActive:false,   
-				replyPopUp:false,
-				replyData:[],
-				commentData:{commentMsg:"",name:"用户",commentTime:"2020-8-23"},
-				height:"",
+                tagActive:false,   //选中的tab标签
+				height:"",  //滚动区域高度
+				isFullScreen:false  //视频全屏时为true,默认false
+				// replyPopUp:false,
+				// replyData:[],
+				// commentData:{commentMsg:"",name:"用户",commentTime:"2020-8-23"},
+				
+				
 			}
 		},
 		onReady() {
@@ -173,7 +176,7 @@
 		},
 		onShow(){
 			// 从本地存储获取主题色
-			this.tabbarColor.backgroundColor=this.$getMainColor().color||""
+			this.tabbarColor.backgroundColor=this.$getMainColor().color||"#2a91d5"
 			this.videoText=uni.createVideoContext("myVideo");
 			
 		},
@@ -245,9 +248,20 @@
 			// 点击简介、评论选项卡时更改选中的样式
 			choossetag(flag){
 				this.tagActive=flag;
+			},
+			// 视频播放暂停控件显示隐藏时触发
+			controlstoggle(e){
+				// console.log(e.detail)
+			},
+			// 进入全屏和退出全屏时触发
+			fullscreenchange(e){
+				if(e.detail.fullscreen){
+					this.isFullScreen==true
+				}else{
+					this.isFullScreen==false
+				}
 				
 			},
-			
 			
 			/*
 				点击某条评论显示回复的详细内容
@@ -312,9 +326,7 @@
 		font-size: 0;
 		
 	}
-	.videoArea video{
-		object-fit:fill;
-	}
+	// 暂停时出现的暂停、播放图片
 	.video-cover-view{
 		width: 50px;
 		height:50px;
@@ -329,6 +341,17 @@
 		font-size: 30px;
 		color: #fff;
 	}
+	// 全屏时出现下载分享等功能样式
+	.fullScreenView{
+		width: 100%;
+		height: 44px;
+		background-color: rgba(255,255,255,0.5);
+		font-size: 30px;
+		line-height: 44px;
+		color: #fff;
+		z-index: 10000;
+	}
+	
 	/* 选项卡区域 */
 	.tag{
 		display: flex;
