@@ -107,6 +107,9 @@
 			</view>
 		</view>
 		
+		<view @click="change">
+			{{ count }}
+		</view>
 		<!-- 遮罩层,小程序用户登录时显示loading动画 -->
 		<!-- #ifdef MP-WEIXIN -->
 		<u-mask :show="maskShow" :custom-style="{background: 'rgba(255, 255, 255, 0.5)'}">
@@ -263,10 +266,17 @@
 				})
 			},
 			// #endif
-			...mapMutations(["login"])
-		},
-		watch:{
 			
+			change(){
+				let i=1;
+				this.$store.commit("changeTest",i++)
+			},
+			...mapMutations(["login","changeTest"])
+		},
+		computed:{
+			count(){
+				return this.$store.state.test
+			}
 		}
 	}
 </script>

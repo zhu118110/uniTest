@@ -252,13 +252,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _api = _interopRequireDefault(__webpack_require__(/*! ../../api/api.js */ 46));var _name$data$onReady$co;function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var like = function like() {__webpack_require__.e(/*! require.ensure | pages/myComponent/like */ "pages/myComponent/like").then((function () {return resolve(__webpack_require__(/*! ../myComponent/like.vue */ 118));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var comment = function comment() {__webpack_require__.e(/*! require.ensure | pages/myComponent/comment */ "pages/myComponent/comment").then((function () {return resolve(__webpack_require__(/*! ../myComponent/comment.vue */ 125));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var replyPopUp = function replyPopUp() {__webpack_require__.e(/*! require.ensure | pages/myComponent/replyPopUp */ "pages/myComponent/replyPopUp").then((function () {return resolve(__webpack_require__(/*! ../myComponent/replyPopUp.vue */ 132));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var commentInput = function commentInput() {__webpack_require__.e(/*! require.ensure | pages/myComponent/comment-input */ "pages/myComponent/comment-input").then((function () {return resolve(__webpack_require__(/*! ../myComponent/comment-input.vue */ 139));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default = (_name$data$onReady$co = {
 
   name: "detail",
   data: function data() {
 
     return {
+      src: "http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/28742df34564972819219071568/v.f210.m3u8",
       id: "",
       tabbarColor: {
         backgroundColor: "#2a91d5" },
@@ -289,9 +289,10 @@ var _api = _interopRequireDefault(__webpack_require__(/*! ../../api/api.js */ 46
 
       showNumber: 5,
       comment: "", //评论内容
-      tagActive: false, //选中的tab标签
-      height: "", //滚动区域高度
-      isFullScreen: false //视频全屏时为true,默认false
+      tagActive: true, //选中的tab标签
+      height: 0, //滚动区域高度
+      isFullScreen: false, //视频全屏时为true,默认false
+      zhezhaoc: false
       // replyPopUp:false,
       // replyData:[],
       // commentData:{commentMsg:"",name:"用户",commentTime:"2020-8-23"},
@@ -324,22 +325,21 @@ var _api = _interopRequireDefault(__webpack_require__(/*! ../../api/api.js */ 46
   } }, _defineProperty(_name$data$onReady$co, "onReady", function onReady()
 {
   // 设置滚动区域高度
-  this.getHeight();
-
+  this.getHeight(".tabArea");
+  // this.getHeight(".commentArea");
 }), _defineProperty(_name$data$onReady$co, "methods",
 {
   getHeight: function getHeight(ele) {
     var _this = this;
+    _this.height = 0;
     var pageHeight = "";
     var queryHeight = "";
     var page = uni.getSystemInfoSync();
     pageHeight = page.windowHeight; //获取窗口高度
-    var query = uni.createSelectorQuery().in(this);
-    query.select(".fixed").boundingClientRect(function (res) {
-
-      queryHeight = parseInt(res.height);
-      _this.height = (pageHeight - queryHeight - res.top) * 2 + "rpx";
-
+    var query = uni.createSelectorQuery();
+    query.select(ele).boundingClientRect(function (res) {
+      queryHeight = parseInt(res.top);
+      _this.height = Math.abs(pageHeight - queryHeight);
     }).exec();
 
   },
@@ -391,16 +391,49 @@ var _api = _interopRequireDefault(__webpack_require__(/*! ../../api/api.js */ 46
   choossetag: function choossetag(flag) {
     this.tagActive = flag;
   },
-  // 视频播放暂停控件显示隐藏时触发
+  // 视频播放暂停控件显示隐藏时,下载按钮也随着显示隐藏
   controlstoggle: function controlstoggle(e) {
-    // console.log(e.detail)
+    this.zhezhaoc = e.detail.show;
+
   },
+  // 下载视频
+  videoDownload: function videoDownload() {
+    var _this = this;
+    var filename = new Date().valueOf();
+    // let filepath=
+    var downloadTask = uni.downloadFile({
+      url: _this.src,
+      // filePath:filename,
+      success: function success(res) {
+        console.log(res);
+        if (res.statusCode == 200) {
+
+          var tempFilePath = res.tempFilePath;
+          console.log(tempFilePath);
+          uni.saveVideoToPhotosAlbum({
+            filePath: tempFilePath,
+            success: function success(red) {
+              console.log(red);
+            },
+            fail: function fail(err) {
+              console.log(err);
+            } });
+
+        }
+
+      } });
+
+
+
+  },
+
   // 进入全屏和退出全屏时触发
   fullscreenchange: function fullscreenchange(e) {
+
     if (e.detail.fullscreen) {
-      this.isFullScreen == true;
-    } else {
-      this.isFullScreen == false;
+      // uni.onWindowResize(function(){
+
+      // })
     }
 
   }

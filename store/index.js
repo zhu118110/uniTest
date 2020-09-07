@@ -6,6 +6,7 @@ const store = new Vuex.Store({
 		// 用户登录信息
 		userInfor:{},
 		isLogin:false,  //是否登录
+		test:1,
 	},
     mutations: {
 		// 保存小程序登录信息
@@ -25,6 +26,11 @@ const store = new Vuex.Store({
 			uni.removeStorage({
 				key:"userInfor"
 			})
+		},
+		changeTest(state,newTest){
+			
+			state.test+=newTest;
+			console.log(state.test)
 		}
 	},
     actions: {}

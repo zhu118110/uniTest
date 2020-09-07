@@ -11,11 +11,10 @@
 		
 		<!-- 视频播放区域 -->
 		<view class="fixed">
-			<view class="videoArea">
+			<view class="videoArea" :class="{'_video':isFullScreen}">
 				<video 
 					id="myVideo"
-					style="width: 100%;"
-					src="http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/28742df34564972819219071568/v.f210.m3u8" 
+					:src="src" 
 					poster="/static/bd1.jpg"
 					:controls="true"
 					object-fit="fill"
@@ -29,14 +28,14 @@
 				>
 					<!-- 视频暂停时显示的暂停播放按钮 -->
 					<cover-view v-if="paused" class="video-cover-view" @click="hideCover">
-						<cover-view class="iconfont" :class="[paused?'icon-zanting':'icon-icon_bofang']"></cover-view>
+						<cover-view>{{ paused?"暂停":"播放" }}</cover-view>
 					</cover-view>
 					<!-- 全屏时显示下载、分享等按钮样式 -->
-					<cover-view class="fullScreenView">
-						
-						遮罩层
-					</cover-view>
+					
 				</video>
+				<cover-view class="fullScreenView" v-if="zhezhaoc" >
+					<cover-view @click="videoDownload">下载</cover-view>
+				</cover-view>
 			</view>
 			<view class="tag">
 				<view class="intro" :class="{'tag-active':tagActive}" @click="choossetag(true)">
@@ -47,62 +46,62 @@
 				</view>
 			</view>
 		</view>
-		
-		<!-- 简介 -->
-		<view class="scrollArea" v-show="tagActive">
-			<scroll-view scroll-y="true" :style="{'height':height}" >
-				
-				<view class="introArea" >
-					<view class="detail">
-						<u-collapse style="width: 100%;">
-							<u-collapse-item :title="moviewInfor.name" >
-								<view>
-									<view>导演:{{ moviewInfor.dir }}</view>
-									<view>类型:{{ moviewInfor.tag }}</view>
-									<view style="text-indent: 1cm;">{{ moviewInfor.desc }}</view>	
-								</view>
-								
-							</u-collapse-item>
-						</u-collapse>
-					</view>
-
-					<!-- 收藏点赞区域 -->
-					<view class="collectArea">
-						<view>
-							<text class="iconfont icon-dianzan"></text>
-							<text>25</text>
-						</view>	
-						<view >
-							<text class="iconfont icon-caishixin-"></text>
-							<text>10</text>
-						</view>	
-						<view>
-							<text class="iconfont icon-shoucang2"></text>
-							<text>收藏</text>
-						</view>
-						<view>
-							<text class="iconfont icon-tubiao-"></text>
-							<text>分享</text>
-						</view>	
-					</view>
+		<!-- tab内容显示区域 -->
+		<view class="tabArea">
+			<!-- 简介 -->
+			<view class="scrollArea" v-show="tagActive">
+				<scroll-view class="scroll1" scroll-y="true" :style="{'height':height+'px'}" >
 					
-					<!-- 猜你喜欢 -->
-					<view class="like">
-							<like></like>
-					</view>
-				</view>
-			</scroll-view>
-		</view>
-		<!-- 评论 -->
-		<view v-show="!tagActive">
-		
-			<view class="commentArea">
-				<comment :height="height"></comment>
-			
-			</view>
-			
-		</view>
+					<view class="introArea" >
+						<view class="detail">
+							<u-collapse style="width: 100%;">
+								<u-collapse-item :title="moviewInfor.name" >
+									<view>
+										<view>导演:{{ moviewInfor.dir }}</view>
+										<view>类型:{{ moviewInfor.tag }}</view>
+										<view style="text-indent: 1cm;">{{ moviewInfor.desc }}</view>	
+									</view>
+									
+								</u-collapse-item>
+							</u-collapse>
+						</view>
 
+						<!-- 收藏点赞区域 -->
+						<view class="collectArea">
+							<view>
+								<text class="iconfont icon-dianzan"></text>
+								<text>25</text>
+							</view>	
+							<view >
+								<text class="iconfont icon-caishixin-"></text>
+								<text>10</text>
+							</view>	
+							<view>
+								<text class="iconfont icon-shoucang2"></text>
+								<text>收藏</text>
+							</view>
+							<view>
+								<text class="iconfont icon-tubiao-"></text>
+								<text>分享</text>
+							</view>	
+						</view>
+						
+						<!-- 猜你喜欢 -->
+						<view class="like">
+								<like></like>
+						</view>
+					</view>
+				</scroll-view>
+			</view>
+			<!-- 评论 -->
+			<view v-show="!tagActive">
+			
+				<view class="commentArea">
+					<comment :height="height"></comment>
+				</view>
+				
+			</view>
+		</view>
 	</view>	
 </template>
 
@@ -117,6 +116,7 @@
 		data(){
 			
 			return{
+				src:"http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/28742df34564972819219071568/v.f210.m3u8",
 				id:"",
 				tabbarColor:{
 					backgroundColor:"#2a91d5"
@@ -147,9 +147,10 @@
 				}],
 				showNumber:5,
 				comment:"",   //评论内容
-                tagActive:false,   //选中的tab标签
-				height:"",  //滚动区域高度
-				isFullScreen:false  //视频全屏时为true,默认false
+                tagActive:true,   //选中的tab标签
+				height:0,  //滚动区域高度
+				isFullScreen:false,  //视频全屏时为true,默认false
+				zhezhaoc:false,
 				// replyPopUp:false,
 				// replyData:[],
 				// commentData:{commentMsg:"",name:"用户",commentTime:"2020-8-23"},
@@ -182,22 +183,21 @@
 		},
 		onReady() {
 			// 设置滚动区域高度
-			this.getHeight();
-			
+			this.getHeight(".tabArea");
+			// this.getHeight(".commentArea");
 		},
 		methods:{
 			getHeight(ele){
 				let _this=this;
+				_this.height=0;
 				let pageHeight="";
 				let queryHeight="";
 				let page=uni.getSystemInfoSync();
 				pageHeight=page.windowHeight;  //获取窗口高度
-				let query=uni.createSelectorQuery().in(this);
-				query.select(".fixed").boundingClientRect(res=>{
-					
-					queryHeight=parseInt(res.height);
-					_this.height=(pageHeight-queryHeight-res.top)*2+"rpx"
-					
+				let query=uni.createSelectorQuery();
+				query.select(ele).boundingClientRect(res=>{
+					queryHeight=parseInt(res.top);
+					_this.height=Math.abs(pageHeight-queryHeight);
 				}).exec()
 				
 			},
@@ -249,16 +249,49 @@
 			choossetag(flag){
 				this.tagActive=flag;
 			},
-			// 视频播放暂停控件显示隐藏时触发
+			// 视频播放暂停控件显示隐藏时,下载按钮也随着显示隐藏
 			controlstoggle(e){
-				// console.log(e.detail)
+				this.zhezhaoc=e.detail.show;
+			
 			},
+			// 下载视频
+			videoDownload(){
+				let _this=this;
+				let filename=new Date().valueOf();
+				// let filepath=
+				const downloadTask=uni.downloadFile({
+					url:_this.src,
+					// filePath:filename,
+					success:(res)=>{
+						console.log(res)
+						if(res.statusCode==200){
+							
+							let tempFilePath=res.tempFilePath;
+							console.log(tempFilePath)
+							uni.saveVideoToPhotosAlbum({
+								filePath:tempFilePath,
+								success(red) {
+									console.log(red)
+								},
+								fail(err) {
+									console.log(err)
+								}
+							})
+						}
+						
+					},
+				});
+				
+				
+			},
+			
 			// 进入全屏和退出全屏时触发
 			fullscreenchange(e){
+			
 				if(e.detail.fullscreen){
-					this.isFullScreen==true
-				}else{
-					this.isFullScreen==false
+					// uni.onWindowResize(function(){
+						
+					// })
 				}
 				
 			},
@@ -324,7 +357,21 @@
 	.videoArea{
 		width: 100%;
 		font-size: 0;
+		background-color: #000;
+		height: 255px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+	}
+	.videoArea video{
+		width: 95%;
+		box-sizing: border-box;
 		
+	}
+	._video{
+		width: 90%;
+		height: 200px;
 	}
 	// 暂停时出现的暂停、播放图片
 	.video-cover-view{
@@ -336,20 +383,29 @@
 		align-items: center;
 		margin: 0 auto;
 		transform: translate(0, 150%);
+		border-radius: 50%;
 	}
 	.video-cover-view cover-view{
-		font-size: 30px;
+		font-size: 14px;
 		color: #fff;
 	}
 	// 全屏时出现下载分享等功能样式
 	.fullScreenView{
-		width: 100%;
-		height: 44px;
-		background-color: rgba(255,255,255,0.5);
-		font-size: 30px;
-		line-height: 44px;
-		color: #fff;
-		z-index: 10000;
+		
+		
+		height: 275px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		position: absolute;
+		color: #eee;
+		right: 1%;
+		z-index: 20000;
+		& cover-view{
+			padding: 5px 10px;
+			font-size: 14px;
+			background-color: rgba(0,0,0,0.4);
+		}
 	}
 	
 	/* 选项卡区域 */
@@ -358,12 +414,12 @@
 		justify-content: space-around;
 		height: 44px;
 		align-items: center;
-		// box-shadow: 0 1px 5px #ccc;
-		// position: fixed;
+	
 		background-color: #fff;
 		z-index: ;
 		width: 100%;
 		padding: 0 10rpx;
+		border-bottom: 1rpx solid #f1f1f1;
 		&>view{
 			height: 100%;
 			line-height: 44px;

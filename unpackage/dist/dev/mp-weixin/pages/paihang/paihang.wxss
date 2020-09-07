@@ -33,4 +33,15 @@
 .list.data-v-26d709c8{
 	padding: 0 10rpx;
 }
+.scroll.data-v-26d709c8{
+	height: calc( 100vh - 70px );
+}
+.loading.data-v-26d709c8{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+}
 

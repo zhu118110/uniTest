@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/detail/detail",
-    "pages/index/index",
     "pages/my/my",
+    "pages/detail/detail",
     "pages/paihang/paihang",
+    "pages/index/index",
     "pages/paihang/search/search",
     "pages/my/login/login",
     "pages/my/changeTitle/changeTitle"
@@ -35,6 +35,5 @@
     ]
   },
   "permission": {},
-  "usingComponents": {},
-  "sitemapLocation": "sitemap48.json"
+  "usingComponents": {}
 }

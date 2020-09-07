@@ -32,6 +32,14 @@ _vue.default.prototype.$getMainColor = function () {
   return mainColor;
 };
 // 封装GET请求
+/*
+	@params(Object) params:请求参数
+		params{
+			url，
+			data,
+			header,
+		}	
+*/
 _vue.default.prototype.$hhtpGet = function (params) {
 
   return new Promise(function (resolve, reject) {

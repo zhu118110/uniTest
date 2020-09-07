@@ -2,7 +2,7 @@
 
 <template>
 	<view class="container">
-		<scroll-view scroll-y="true" :style="{'height':height}" style="padding-bottom: 44px;" @scrolltolower="commentScrolltolower">
+		<scroll-view class="scroll" scroll-y="true" :style="{'height':height+'px'}" @scrolltolower="commentScrolltolower">
 			<view class="">热门评论({{20}})</view>
 			<!-- 评论列表 -->
 			<view class="comment-list">
@@ -47,9 +47,10 @@
 			<view class="loading">
 				<u-loading mode="circle" :show="load"></u-loading>
 			</view>
+			<commentInput @search="search(arguments)"></commentInput>
 			
 		</scroll-view>
-		<commentInput></commentInput>
+		
 	</view>
 </template>
 
@@ -70,6 +71,7 @@
 		},
 		data(){
 			return{
+				
 				commentList:[{
 					name:"钢铁侠",
 					commentMsg:"这视频里的小姐姐页太好看了",
@@ -104,18 +106,30 @@
 					name:"洛基",
 					commentMsg:"开美颜了吧",
 					commentTime:"2020-8-20",
-				},],
+				},{
+					name:"洛基",
+					commentMsg:"开美颜了吧",
+					commentTime:"2020-8-20",
+				},{
+					name:"洛基",
+					commentMsg:"开美颜了吧",
+					commentTime:"2020-8-20",
+				}],
 				mockList:{
 					name:"卷福",
 					commentMsg:"没头发的才好看",
 					commentTime:"2020-8-20",
 				},
 				showNumber:5,
-				load:false
+				load:false,
+				
 			}
 		},
-		
+		mounted() {
+			console.log(this.height)
+		},
 		methods:{
+			
 			// 点击回复内容进入回复详情页
 			/*
 				@params{Number} index:点击的评论数据的下标
@@ -143,6 +157,15 @@
 				},2000)
 				
 			},
+			// 子组件评论输入框点击发表时触发,传递的数据包括时间(年月日,发表的内容)
+			search(val){
+				
+				this.commentList.pop({
+					name:"默认用户",
+					commentMsg:val[0],
+					commentTime:val[1],
+				})
+			}
 			
 		},
 		
@@ -161,6 +184,9 @@
 		height: 100%;
 		width: @width; 
 		
+	}
+	.scroll{
+		padding-bottom: 44px;
 	}
 	.comment-list{
 		

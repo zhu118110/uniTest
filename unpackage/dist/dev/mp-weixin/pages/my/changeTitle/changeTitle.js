@@ -188,10 +188,7 @@ var _default =
       // 同步存储更新后的主题色
       uni.setStorageSync("styleColor", { index: index, color: this.colorList[index].color });
       this.$getMainColor();
-    } },
-
-
-  watch: {} };exports.default = _default;
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

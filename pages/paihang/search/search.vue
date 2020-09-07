@@ -121,8 +121,12 @@
 				_this.searchMsg=name;
 				_this.load=true;
 				_this.seacrListShow=false
-				this.$hhtpGet("http://api.avatardata.cn/Movie/Query?key="+keys.detailKey,{
+				
+				this.$hhtpGet({
+					url:"http://api.avatardata.cn/Movie/Query?key="+keys.detailKey,
+					data:{
 						name:name
+					}
 				}).then(result=>{
 					if(result.data.result){
 						_this.result.push(result.data.result)
@@ -136,7 +140,8 @@
 					_this.historySession()  //历史搜索记录存到本地
 				})
 				.catch(err=>{
-					console.log(err)
+					this.$u.toast("请求后台数据错误,稍后在数");
+					_this.load=false
 				})
 			},
 			// 清空历史搜索记录

@@ -106,10 +106,10 @@ var components = {
     return __webpack_require__.e(/*! import() | components/uview-ui/components/u-checkbox/u-checkbox */ "components/uview-ui/components/u-checkbox/u-checkbox").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-checkbox/u-checkbox.vue */ 230))
   },
   uMask: function() {
-    return __webpack_require__.e(/*! import() | components/uview-ui/components/u-mask/u-mask */ "components/uview-ui/components/u-mask/u-mask").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-mask/u-mask.vue */ 188))
+    return __webpack_require__.e(/*! import() | components/uview-ui/components/u-mask/u-mask */ "components/uview-ui/components/u-mask/u-mask").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-mask/u-mask.vue */ 209))
   },
   uLoading: function() {
-    return __webpack_require__.e(/*! import() | components/uview-ui/components/u-loading/u-loading */ "components/uview-ui/components/u-loading/u-loading").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-loading/u-loading.vue */ 195))
+    return __webpack_require__.e(/*! import() | components/uview-ui/components/u-loading/u-loading */ "components/uview-ui/components/u-loading/u-loading").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-loading/u-loading.vue */ 153))
   }
 }
 var render = function() {

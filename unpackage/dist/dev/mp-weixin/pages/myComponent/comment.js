@@ -81,7 +81,7 @@ var components = {
     return __webpack_require__.e(/*! import() | components/uview-ui/components/u-read-more/u-read-more */ "components/uview-ui/components/u-read-more/u-read-more").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-read-more/u-read-more.vue */ 244))
   },
   uLoading: function() {
-    return __webpack_require__.e(/*! import() | components/uview-ui/components/u-loading/u-loading */ "components/uview-ui/components/u-loading/u-loading").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-loading/u-loading.vue */ 195))
+    return __webpack_require__.e(/*! import() | components/uview-ui/components/u-loading/u-loading */ "components/uview-ui/components/u-loading/u-loading").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-loading/u-loading.vue */ 153))
   }
 }
 var render = function() {
@@ -177,6 +177,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
 //输入评论框
 var _default = {
   name: "comment",
@@ -193,6 +194,7 @@ var _default = {
 
   data: function data() {
     return {
+
       commentList: [{
         name: "钢铁侠",
         commentMsg: "这视频里的小姐姐页太好看了",
@@ -226,6 +228,14 @@ var _default = {
       {
         name: "洛基",
         commentMsg: "开美颜了吧",
+        commentTime: "2020-8-20" },
+      {
+        name: "洛基",
+        commentMsg: "开美颜了吧",
+        commentTime: "2020-8-20" },
+      {
+        name: "洛基",
+        commentMsg: "开美颜了吧",
         commentTime: "2020-8-20" }],
 
       mockList: {
@@ -236,9 +246,13 @@ var _default = {
       showNumber: 5,
       load: false };
 
-  },
 
+  },
+  mounted: function mounted() {
+    console.log(this.height);
+  },
   methods: {
+
     // 点击回复内容进入回复详情页
     /*
     	@params{Number} index:点击的评论数据的下标
@@ -264,6 +278,15 @@ var _default = {
         }
         _this.load = false;
       }, 2000);
+
+    },
+    // 子组件评论输入框点击发表时触发,传递的数据包括时间(年月日,发表的内容)
+    search: function search(val) {
+
+      this.commentList.pop({
+        name: "默认用户",
+        commentMsg: val[0],
+        commentTime: val[1] });
 
     } } };exports.default = _default;
 

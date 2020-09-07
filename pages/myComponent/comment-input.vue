@@ -39,7 +39,13 @@
 					this.comment="";
 					return;
 				}
-				this.$emit("search",value);
+				
+				let noeData = new Date();
+				let Y = noeData.getFullYear() + '-';
+				let M = (noeData.getMonth()+1 < 10 ? '0'+(noeData.getMonth()+1) : noeData.getMonth()+1) + '-';
+				let D = noeData.getDate()< 10 ? "0" + noeData.getDate() : noeData.getDate() + ' ';
+				
+				this.$emit("search",value,Y+M+D);
 				this.comment="";
 				
 			}

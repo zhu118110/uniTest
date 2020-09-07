@@ -8,6 +8,26 @@ view.data-v-3e159eb4 {
 .videoArea.data-v-3e159eb4 {
   width: 100%;
   font-size: 0;
+  background-color: #000;
+  height: 255px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  position: relative;
+}
+.videoArea video.data-v-3e159eb4 {
+  width: 95%;
+  box-sizing: border-box;
+}
+._video.data-v-3e159eb4 {
+  width: 90%;
+  height: 200px;
 }
 .video-cover-view.data-v-3e159eb4 {
   width: 50px;
@@ -25,19 +45,32 @@ view.data-v-3e159eb4 {
   margin: 0 auto;
   -webkit-transform: translate(0, 150%);
           transform: translate(0, 150%);
+  border-radius: 50%;
 }
 .video-cover-view cover-view.data-v-3e159eb4 {
-  font-size: 30px;
+  font-size: 14px;
   color: #fff;
 }
 .fullScreenView.data-v-3e159eb4 {
-  width: 100%;
-  height: 44px;
-  background-color: rgba(255, 255, 255, 0.5);
-  font-size: 30px;
-  line-height: 44px;
-  color: #fff;
-  z-index: 10000;
+  height: 275px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+  position: absolute;
+  color: #eee;
+  right: 1%;
+  z-index: 20000;
+}
+.fullScreenView cover-view.data-v-3e159eb4 {
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 /* 选项卡区域 */
 .tag.data-v-3e159eb4 {
@@ -54,6 +87,7 @@ view.data-v-3e159eb4 {
   z-index: ;
   width: 100%;
   padding: 0 10rpx;
+  border-bottom: 1rpx solid #f1f1f1;
 }
 .tag > view.data-v-3e159eb4 {
   height: 100%;

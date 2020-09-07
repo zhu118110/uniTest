@@ -34,8 +34,23 @@
 		</view>
 		<!-- 电影列表 -->
 		<view class="list">
-			<list></list>
+			<scroll-view scroll-y="true" class="scroll" 
+				refresher-enabled="true"
+				:refresher-triggered="refresher"
+				@scrolltolower="scrolltolower"
+				@refresherrefresh="refresherrefresh"
+				>
+				<list :movieData="dataList" :rate="true"></list>
+			</scroll-view>
+			<view class="loading">
+				<u-loading mode="circle" :show="loading">加载中</u-loading>
+				
+			</view>
+			<view>
+				
+			</view>
 		</view>
+		
 		
 	</view>
 </template>
@@ -45,6 +60,69 @@
 	export default{
 		data(){
 			return{
+				scrollHeight:500,
+				dataList:[{
+						type:"电影",
+						nm:"港囧",
+						sc:8.5,//评分,
+						cover:"/static/lb1.jpg"
+					},{
+						type:"电影",
+						nm:"无极",
+						sc:8.0,//评分
+						cover:"/static/bd1.jpg"
+					},{
+						type:"电影",
+						nm:"复仇者联盟一",
+						sc:8.5,//评分,
+						cover:"/static/lb2.jpg"
+					},{
+						type:"电影",
+						nm:"心花路放",
+						sc:8.0,//评分
+						cover:"/static/bd1.jpg"
+					},{
+						type:"电影",
+						nm:"暗夜",
+						sc:8.0,//评分
+						cover:"/static/lb1.jpg"
+					},{
+						type:"电影",
+						nm:"越狱",
+						sc:8.0,//评分
+						cover:"/static/lb3.png"
+					},{
+						type:"电影",
+						nm:"白蛇:缘起",
+						sc:8.5,//评分,
+						cover:"/static/bd1.jpg"
+					},{
+						type:"电影",
+						nm:"极限挑战",
+						sc:8.0,//评分
+						cover:"/static/lb3.png"
+					},{
+						type:"电影",
+						nm:"妙先生",
+						sc:8.0,//评分
+						cover:"/static/bd1.jpg"
+					},{
+						type:"电影",
+						nm:"复仇者联盟一",
+						sc:8.5,//评分,
+						cover:"/static/lb2.jpg"
+					},{
+						type:"电影",
+						nm:"心花路放",
+						sc:8.0,//评分
+						cover:"/static/bd1.jpg"
+					},{
+						type:"电影",
+						nm:"极限挑战",
+						sc:7.4,//评分
+						cover:"/static/bd1.jpg"
+					}
+				],
 				tabbarColor:{
 					backgroundColor:"#2a91d5"
 				},
@@ -53,21 +131,47 @@
 				},
 				inputStyle:{
 					width:"100%"
-				}
+				},
+				refresher:false,
+				loading:false
 			}
 		},
 		components:{
 			list
 		},
 		onShow() {
-			this.tabbarColor.backgroundColor=this.$getMainColor().color
+			this.tabbarColor.backgroundColor=this.$getMainColor().color||"#2a91d5";
+		},
+		computed:{
+			count(){
+				return this.$store.state.test
+			}
 		},
 		methods:{
+			// 点击导航跳转到搜索页面
 			toSearch(){
 				uni.navigateTo({
 					url:"./search/search"
 				})
-			}
+			},
+			// 滚动到底部触发
+			scrolltolower(){
+			
+				this.loading=true;
+				setTimeout(()=>{
+					this.loading=false;
+					this.$u.toast("上拉加载但是没有数据")
+				},2000)
+			},
+			// 下拉时触发
+			refresherrefresh(){
+				this.refresher=true;
+				setTimeout(()=>{
+					this.refresher=false;
+					this.$u.toast("下拉刷新但是没有数据")
+				},1000)
+				
+			},
 		}
 		
 	}
@@ -98,5 +202,13 @@
 	
 	.list{
 		padding: 0 10rpx;
+	}
+	.scroll{
+		height: calc( 100vh - 70px );
+	}
+	
+	.loading{
+		display: flex;
+		justify-content: center;
 	}
 </style>

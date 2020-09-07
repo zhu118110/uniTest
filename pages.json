@@ -1,21 +1,6 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			// 电影详情页
-			"path": "pages/detail/detail",
-			"style": {
-				"navigationStyle":"custom"
-			}
-		},
-		{
-			// 主页
-			"path": "pages/index/index",
-			"style": {
-				"navigationStyle":"custom"
-				
-			}
-		},
-		{
 			// 我的
 			"path": "pages/my/my",
 			"style": {
@@ -23,7 +8,13 @@
 				"navigationStyle":"custom"
 			}
 		},
-		
+		{
+			// 电影详情页
+			"path": "pages/detail/detail",
+			"style": {
+				"navigationStyle":"custom"
+			}
+		},
 		{
 			// 排行
 			"path": "pages/paihang/paihang",
@@ -32,6 +23,18 @@
 				"navigationStyle":"custom"
 			}
 		},
+		
+		{
+			// 主页
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle":"custom"
+				
+			}
+		},
+		
+		
+		
 		{
 			// 搜索页
 			"path": "pages/paihang/search/search",

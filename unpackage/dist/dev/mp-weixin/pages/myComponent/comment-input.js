@@ -78,7 +78,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   uSearch: function() {
-    return __webpack_require__.e(/*! import() | components/uview-ui/components/u-search/u-search */ "components/uview-ui/components/u-search/u-search").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-search/u-search.vue */ 202))
+    return __webpack_require__.e(/*! import() | components/uview-ui/components/u-search/u-search */ "components/uview-ui/components/u-search/u-search").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-search/u-search.vue */ 146))
   }
 }
 var render = function() {
@@ -159,7 +159,13 @@ var _default =
         this.comment = "";
         return;
       }
-      this.$emit("search", value);
+
+      var noeData = new Date();
+      var Y = noeData.getFullYear() + '-';
+      var M = (noeData.getMonth() + 1 < 10 ? '0' + (noeData.getMonth() + 1) : noeData.getMonth() + 1) + '-';
+      var D = noeData.getDate() < 10 ? "0" + noeData.getDate() : noeData.getDate() + ' ';
+
+      this.$emit("search", value, Y + M + D);
       this.comment = "";
 
     } } };exports.default = _default;

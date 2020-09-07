@@ -6,6 +6,7 @@
 		:refresher-triggered="refresher"
 		@scrolltolower="scrolltolower"
 		@refresherrefresh="refresherpulling">
+		动漫
 		</scroll-view>
 	</view>
 </template>

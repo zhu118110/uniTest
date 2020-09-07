@@ -97,10 +97,10 @@ var components = {
     return __webpack_require__.e(/*! import() | components/uview-ui/components/u-navbar/u-navbar */ "components/uview-ui/components/u-navbar/u-navbar").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-navbar/u-navbar.vue */ 97))
   },
   uSearch: function() {
-    return __webpack_require__.e(/*! import() | components/uview-ui/components/u-search/u-search */ "components/uview-ui/components/u-search/u-search").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-search/u-search.vue */ 202))
+    return __webpack_require__.e(/*! import() | components/uview-ui/components/u-search/u-search */ "components/uview-ui/components/u-search/u-search").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-search/u-search.vue */ 146))
   },
   uLoading: function() {
-    return __webpack_require__.e(/*! import() | components/uview-ui/components/u-loading/u-loading */ "components/uview-ui/components/u-loading/u-loading").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-loading/u-loading.vue */ 195))
+    return __webpack_require__.e(/*! import() | components/uview-ui/components/u-loading/u-loading */ "components/uview-ui/components/u-loading/u-loading").then(__webpack_require__.bind(null, /*! @/components/uview-ui/components/u-loading/u-loading.vue */ 153))
   }
 }
 var render = function() {
@@ -295,13 +295,18 @@ var _default = { data: function data() {return { searchMsg: "", //搜索字段
     this.tabbarColor.backgroundColor = this.$getMainColor().color; // 从本地获取历史搜索的数据
     this.historySearch = uni.getStorageSync("historySearch") || [];}, onBackPress: function onBackPress(options) {if (!this.seacrListShow) {this.seacrListShow = true;return true;}}, methods: { /*
                                                                                                                                                                                                  	@params{String} name: 搜索的电影名称
-                                                                                                                                                                                                 */goSearch: function goSearch(name) {if (name == "") {return;}var _this = this;_this.result = [];_this.searchMsg = name;_this.load = true;_this.seacrListShow = false;this.$hhtpGet("http://api.avatardata.cn/Movie/Query?key=" + _api.default.detailKey, { name: name }).then(function (result) {if (result.data.result) {_this.result.push(result.data.result);} // 历史搜索记录超过5条删除最后一条
+                                                                                                                                                                                                 */goSearch: function goSearch(name) {var _this2 = this;if (name == "") {return;}var _this = this;_this.result = [];_this.searchMsg = name;_this.load = true;_this.seacrListShow = false;this.$hhtpGet({ url: "http://api.avatardata.cn/Movie/Query?key=" + _api.default.detailKey, data: { name: name } }).then(function (result) {if (result.data.result) {_this.result.push(result.data.result);} // 历史搜索记录超过5条删除最后一条
         _this.load = false;_this.historySearch.unshift(name);if (_this.historySearch.length >= 5) {_this.historySearch.pop();}_this.historySession(); //历史搜索记录存到本地
-      }).catch(function (err) {console.log(err);});}, // 清空历史搜索记录
+      }).catch(function (err) {_this2.$u.toast("请求后台数据错误,稍后在数");_this.load = false;});}, // 清空历史搜索记录
     clearHistorySearch: function clearHistorySearch() {uni.removeStorageSync("historySearch");this.historySearch = [];}, // 每次搜索完后在本地存储历史搜索记录
     historySession: function historySession() {var _this = this;uni.setStorageSync("historySearch", _this.historySearch);}, // 点击历史记录里的数据进行搜索
-    searchHistoryData: function searchHistoryData(index) {this.searchMsg = this.historySearch[index];this.goSearch(this.searchMsg);}, // 点击搜索出来的电影名称跳转到详情页,参数是电影名称和电影的封面图
-    toDetail: function toDetail(index) {var _this = this;uni.navigateTo({ url: "../../detail/detail?name=" + _this.result[index].title + "&cover=" + _this.result[index].cover });
+    searchHistoryData: function searchHistoryData(index) {this.searchMsg = this.historySearch[index];this.goSearch(this.searchMsg);
+    },
+    // 点击搜索出来的电影名称跳转到详情页,参数是电影名称和电影的封面图
+    toDetail: function toDetail(index) {
+      var _this = this;
+      uni.navigateTo({
+        url: "../../detail/detail?name=" + _this.result[index].title + "&cover=" + _this.result[index].cover });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

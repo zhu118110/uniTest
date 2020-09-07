@@ -6,6 +6,7 @@
 		:refresher-triggered="refresher"
 		@scrolltolower="scrolltolower"
 		@refresherrefresh="refresherpulling">
+		综艺
 		</scroll-view>
 	</view>
 </template>
