@@ -2,7 +2,7 @@
 
 <template>
 	<view class="container">
-		<scroll-view class="scroll" scroll-y="true" :style="{'height':height+'px'}" @scrolltolower="commentScrolltolower">
+		<scroll-view class="scroll" scroll-y="true" :style="{'height':scrollHeight+'px'}" @scrolltolower="commentScrolltolower">
 			<view class="">热门评论({{20}})</view>
 			<!-- 评论列表 -->
 			<view class="comment-list">
@@ -43,11 +43,12 @@
 						
 					</view>
 				</view>
+				<view class="loading" v-if="load">
+					<u-loading mode="circle" :show="load"></u-loading>
+				</view>
 			</view>
-			<view class="loading">
-				<u-loading mode="circle" :show="load"></u-loading>
-			</view>
-			<commentInput @search="search(arguments)"></commentInput>
+			
+			<commentInput :bottom="bottom" @search="search(arguments)"></commentInput>
 			
 		</scroll-view>
 		
@@ -60,8 +61,8 @@
 		name:"comment",
 		props:{
 			
-			"height":{
-				type:String,
+			height:{
+				type:Number,
 				default:300
 			},
 			
@@ -122,12 +123,29 @@
 				},
 				showNumber:5,
 				load:false,
-				
+				scrollHeight:0,
+				bottom:0,
 			}
 		},
-		mounted() {
-			console.log(this.height)
+		created() {
+			
 		},
+		mounted() {
+			setTimeout(()=>{
+				this.scrollHeight = this.height;
+			},500);
+			// 微信小程序监听软键盘的监听隐藏,改变评论框距离底部的位置
+			// #ifdef MP-WEIXIN
+			uni.onKeyboardHeightChange(res=>{	
+				if(res.height == 0){
+					this.bottom = 0;
+				}else{
+					this.bottom = res.height-2;
+				}
+			});
+			// #endif
+		},
+		
 		methods:{
 			
 			// 点击回复内容进入回复详情页
@@ -159,13 +177,16 @@
 			},
 			// 子组件评论输入框点击发表时触发,传递的数据包括时间(年月日,发表的内容)
 			search(val){
-				
-				this.commentList.pop({
-					name:"默认用户",
-					commentMsg:val[0],
-					commentTime:val[1],
-				})
-			}
+				if(val){
+					this.$u.toast('发表成功')
+					this.commentList.push({
+						name:"默认用户",
+						commentMsg:val[0],
+						commentTime:val[1],
+					});
+				}
+			},
+			// 监听键盘高度的变化
 			
 		},
 		
@@ -181,7 +202,7 @@
 	}
 	.container{
 		// padding: 10rpx 0 0;
-		height: 100%;
+		// height: 100%;
 		width: @width; 
 		
 	}
@@ -190,7 +211,7 @@
 	}
 	.comment-list{
 		
-		height: 100%;
+		// height: 100%;
 	}
 	.comment-item{
 		display: flex;

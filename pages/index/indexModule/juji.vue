@@ -4,6 +4,8 @@
 		<scroll-view class="scrollHeight"
 			scroll-y="true"
 			refresher-enabled="true"
+			:upper-threshold="0"
+			:lower-threshold="0"
 			:refresher-triggered="refresher"
 			@refresherrefresh="refresherpulling">
 			
@@ -75,6 +77,26 @@
 					nm:"三十而已",
 					episodeNum:13,
 					cover:"/static/bd1.jpg"
+				},{
+					type:"电视剧",
+					nm:"神盾局特工第一季",
+					episodeNum:13,
+					cover:"/static/lb2.jpg"
+				},{
+					type:"电视剧",
+					nm:"楚乔传",
+					episodeNum:25,
+					cover:"/static/bd1.jpg"
+				},{
+					type:"电视剧",
+					nm:"武林外传",
+					episodeNum:80,
+					cover:"/static/lb1.jpg"
+				},{
+					type:"电视剧",
+					nm:"行尸走肉",
+					episodeNum:15,
+					cover:"/static/bd1.jpg"
 				}],
 			}
 		},
@@ -82,7 +104,7 @@
 			list,scrolllist
 		},
 		mounted() {
-			console.log("剧集")
+			// console.log("剧集")
 		},
 		methods:{
 			// 下拉时触发

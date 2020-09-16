@@ -1,7 +1,6 @@
 .footer.data-v-2950e8d5 {
   width: 100%;
   position: fixed;
-  bottom: 0rpx;
   height: 44px;
   border-top: 1rpx solid #f8f8f8;
   background-color: #fff;

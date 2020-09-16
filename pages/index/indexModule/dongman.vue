@@ -4,7 +4,7 @@
 		scroll-y="true"
 		refresher-enabled="true"
 		:refresher-triggered="refresher"
-		@scrolltolower="scrolltolower"
+		
 		@refresherrefresh="refresherpulling">
 		动漫
 		</scroll-view>
@@ -86,7 +86,7 @@
 			}
 		},
 		mounted() {
-			console.log("动漫")
+			// console.log("动漫")
 		},
 		methods:{
 			// 下拉时触发

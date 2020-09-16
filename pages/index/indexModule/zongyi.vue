@@ -4,7 +4,7 @@
 		scroll-y="true"
 		refresher-enabled="true"
 		:refresher-triggered="refresher"
-		@scrolltolower="scrolltolower"
+		
 		@refresherrefresh="refresherpulling">
 		综艺
 		</scroll-view>
@@ -86,7 +86,7 @@
 			}
 		},
 		mounted() {
-			console.log("综艺")
+			// console.log("综艺")
 		},
 		methods:{
 			// 下拉时触发

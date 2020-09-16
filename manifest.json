@@ -1,7 +1,7 @@
 {
-    "name" : "uniTest",
+    "name" : "影视app",
     "appid" : "__UNI__E0DC4B1",
-    "description" : "",
+    "description" : "这是一个uniapp项目",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
@@ -59,7 +59,8 @@
                         "appid" : "",
                         "UniversalLinks" : ""
                     }
-                }
+                },
+                "ad" : {}
             }
         }
     },

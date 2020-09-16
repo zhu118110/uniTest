@@ -44,8 +44,20 @@ Vue.prototype.$hhtpGet=function(params){
 			}
 		})
 	})
-},
+};
 
+// 改变主题色
+Vue.prototype.$changeTabColor=function(color){
+	
+	// uni.setTabBarStyle({
+	// 	selectedColor:color,
+	// });
+	// 改变顶部导航条颜色
+	uni.setNavigationBarColor({
+		frontColor:"#ffffff",
+		backgroundColor:color,
+	})
+};
 
 
 App.mpType = 'app'

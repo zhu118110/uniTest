@@ -19,7 +19,7 @@
 					:clearable="false"
 					:error-message="errorMessage"
 					@input="phoneBlur"
-				></u-field>
+				></u-field> 
 				<u-field
 					required
 					:disabled="!flag"
@@ -35,7 +35,8 @@
 				</u-field>
 				<view class="tips">
 					<text style="color: #ccc;">温馨提示:未注册的手机号,登陆时会自动注册。如同意则勾选:</text>
-					<u-checkbox v-model="agreen" :active-color="tabbarColor.backgroundColor">《用户服务协议》</u-checkbox>
+					<u-checkbox v-model="agreen" :active-color="tabbarColor.backgroundColor"></u-checkbox>
+					《用户服务协议》
 				</view>
 			</view>
 			
@@ -60,10 +61,7 @@
 		name:"login",
 		data(){
 			return{
-				tabbarColor:{
-					backgroundColor:"#2a91d5",
-					color:"#fff"
-				},
+				
 				tag:true,
 				message:{
 					phone:"",
@@ -83,7 +81,7 @@
 		
 		onShow() {
 			// 从本地存储获取主题色
-			this.tabbarColor.backgroundColor=this.$getMainColor().color||""
+			// this.tabbarColor.backgroundColor=this.$getMainColor().color||""
 		},
 		
 		methods:{
@@ -168,12 +166,26 @@
 					setTimeout(function(){
 						_this.showLoad=false;
 						_this.$u.toast('登录成功');
+						_this.message.code=""
 						uni.navigateBack({})
 					},2000)
 					
 				}
 			}
-		}
+		},
+		computed:{
+			tabbarColor(){
+				// console.log(this.$store.state.tabColor)
+				return {backgroundColor:this.$store.state.tabColor,color:"#fff"};
+			}
+		},
+		// watch:{
+		// 	// 监听页面主题色是否改变
+		// 	"tabbarColor.backgroundColor"(nVal,oVal){
+		// 		this.$changeTabColor(nVal)
+		// 		// console.log(nVal,oVal);
+		// 	}
+		// }
 	}
 </script>
 
@@ -186,7 +198,8 @@
 		justify-content:center;
 	}
 	.diabledStyle{
-		// background-color: rgb(255,255,255,0.4);
+		
+		background-color: rgb(255,255,255,0.4);
 		opacity: 0.5;
 	}
 	// 登录区域

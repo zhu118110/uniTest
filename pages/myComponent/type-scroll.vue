@@ -17,7 +17,8 @@
 			},
 			background:{
 				type:Array,
-				default:["#00ff00","#0077AA","#ffaa00","#aa0000","#ff55ff","#aaaa00"]
+				// default:["#00ff00","#0077AA","#ffaa00","#aa0000","#ff55ff","#aaaa00"]
+				default:()=>["#00ff00","#0077AA","#ffaa00","#aa0000","#ff55ff","#aaaa00"]
 			}
 		},
 		data(){

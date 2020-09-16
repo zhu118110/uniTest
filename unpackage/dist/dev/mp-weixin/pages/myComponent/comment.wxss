@@ -1,12 +1,8 @@
 .container.data-v-721a6398 {
-  height: 100%;
   width: 100%;
 }
 .scroll.data-v-721a6398 {
   padding-bottom: 44px;
-}
-.comment-list.data-v-721a6398 {
-  height: 100%;
 }
 .comment-item.data-v-721a6398 {
   display: -webkit-box;

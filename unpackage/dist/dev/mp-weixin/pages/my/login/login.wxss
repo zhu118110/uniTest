@@ -9,6 +9,7 @@
           justify-content: center;
 }
 .diabledStyle.data-v-61a16bce {
+  background-color: #ffffff;
   opacity: 0.5;
 }
 .loginArea.data-v-61a16bce {

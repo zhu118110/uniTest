@@ -130,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -173,8 +173,9 @@ var _default =
 
   },
   onShow: function onShow() {
-    this.$getMainColor();
+    this.$changeTabColor(this.$store.state.tabColor);
   },
+
   methods: {
     /*
              	点击更换主题颜色
@@ -184,12 +185,17 @@ var _default =
              */
     changeColor: function changeColor(index) {
 
+      // 方案一:同步存储更新后的主题色：
+      // bug:
+      // uni.setStorageSync("styleColor",{index:index,color:this.colorList[index].color});
+      // this.$getMainColor();
 
-      // 同步存储更新后的主题色
-      uni.setStorageSync("styleColor", { index: index, color: this.colorList[index].color });
-      this.$getMainColor();
+
+      // 方案二:使用vuex
+      this.$store.commit("changeTabBar", this.colorList[index].color);
+
+
     } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

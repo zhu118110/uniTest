@@ -6,23 +6,30 @@
 			//  应用刚进来时从本地获取登录信息
 			uni.getStorage({
 				key:"userInfor",
-				success:(res)=>{
+				success(res){
 					// _this.login(res);
 					_this.login(res.data)
 				}
-			})
-		
+			});
 			
 		},
 		onShow: function() {
-			// console.log('App Show')
+			
+			
 		},
 		onHide: function() {
 			// console.log('App Hide')
 		},
-		methods: {  
-			...mapMutations(['login'])  
-		}  
+		methods: { 
+			
+			...mapMutations(['login',"changeTabBar"])  
+		},
+		computed:{
+			
+		},
+		watch:{
+			
+		}
 		
 		
 	}

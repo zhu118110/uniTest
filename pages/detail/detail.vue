@@ -6,7 +6,7 @@
 				<u-loading :show="showLoad" :color="tabbarColor"></u-loading>
 			
 		</u-mask> -->
-		<u-navbar title="人人视频" :background="tabbarColor"></u-navbar>
+		<u-navbar :title="moviewInfor.name" :background="tabbarColor" :border-bottom="false"></u-navbar>
 		
 		
 		<!-- 视频播放区域 -->
@@ -28,14 +28,14 @@
 				>
 					<!-- 视频暂停时显示的暂停播放按钮 -->
 					<cover-view v-if="paused" class="video-cover-view" @click="hideCover">
-						<cover-view>{{ paused?"暂停":"播放" }}</cover-view>
+						{{ paused?"暂停":"播放" }}
 					</cover-view>
 					<!-- 全屏时显示下载、分享等按钮样式 -->
 					
 				</video>
-				<cover-view class="fullScreenView" v-if="zhezhaoc" >
-					<cover-view @click="videoDownload">下载</cover-view>
-				</cover-view>
+				<!-- <cover-view class="fullScreenView" v-if="zhezhaoc" @click="videoDownload">
+					下载
+				</cover-view> -->
 			</view>
 			<view class="tag">
 				<view class="intro" :class="{'tag-active':tagActive}" @click="choossetag(true)">
@@ -118,9 +118,9 @@
 			return{
 				src:"http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/28742df34564972819219071568/v.f210.m3u8",
 				id:"",
-				tabbarColor:{
-					backgroundColor:"#2a91d5"
-				},
+				// tabbarColor:{
+				// 	backgroundColor:"#2a91d5"
+				// },
 				paused:true,   //视频暂停是否显示的cover-view
 				moviewInfor:{
 					name:"默认标题",   //电影名称
@@ -151,6 +151,7 @@
 				height:0,  //滚动区域高度
 				isFullScreen:false,  //视频全屏时为true,默认false
 				zhezhaoc:false,
+				bottom:"100%"
 				// replyPopUp:false,
 				// replyData:[],
 				// commentData:{commentMsg:"",name:"用户",commentTime:"2020-8-23"},
@@ -158,10 +159,7 @@
 				
 			}
 		},
-		onReady() {
-			
-			
-		},
+		
 		components:{
 			like,
 			comment,
@@ -174,18 +172,19 @@
 			this.moviewInfor.coverImg=options.cover;
 			this.getVideo();
 			
+			
 		},
 		onShow(){
 			// 从本地存储获取主题色
-			this.tabbarColor.backgroundColor=this.$getMainColor().color||"#2a91d5"
+			
 			this.videoText=uni.createVideoContext("myVideo");
 			
 		},
 		onReady() {
 			// 设置滚动区域高度
-			this.getHeight(".tabArea");
-			// this.getHeight(".commentArea");
+			this.getHeight(".tabArea")
 		},
+		
 		methods:{
 			getHeight(ele){
 				let _this=this;
@@ -197,7 +196,8 @@
 				let query=uni.createSelectorQuery();
 				query.select(ele).boundingClientRect(res=>{
 					queryHeight=parseInt(res.top);
-					_this.height=Math.abs(pageHeight-queryHeight);
+					_this.height=Math.abs(pageHeight-queryHeight)
+					// console.log("tab区域高度是"+_this.height);
 				}).exec()
 				
 			},
@@ -339,6 +339,12 @@
 			
 		
 		},
+		computed:{
+			tabbarColor(){
+				// console.log(this.$store.state.tabColor)
+				return {backgroundColor:this.$store.state.tabColor};
+			}
+		},
 		
 	}
 </script>
@@ -378,22 +384,23 @@
 		width: 50px;
 		height:50px;
 		background-color: rgba(00,00,00,0.5);
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		// display: flex;
+		// justify-content: center;
+		// align-items: center;
 		margin: 0 auto;
 		transform: translate(0, 150%);
 		border-radius: 50%;
-	}
-	.video-cover-view cover-view{
 		font-size: 14px;
 		color: #fff;
+		text-align: center;
+		line-height: 50px;
+	}
+	.video-cover-view cover-view{
+		// font-size: 14px;
+		// color: #fff;
 	}
 	// 全屏时出现下载分享等功能样式
 	.fullScreenView{
-		
-		
-		height: 275px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
@@ -401,10 +408,12 @@
 		color: #eee;
 		right: 1%;
 		z-index: 20000;
+		padding: 5px 10px;
+		font-size: 14px;
+		background-color: rgba(0,0,0,0.4);
 		& cover-view{
-			padding: 5px 10px;
-			font-size: 14px;
-			background-color: rgba(0,0,0,0.4);
+			// font-size: 14px;
+			// background-color: rgba(0,0,0,0.4);
 		}
 	}
 	

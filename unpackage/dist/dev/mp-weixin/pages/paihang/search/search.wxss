@@ -24,6 +24,9 @@ view.data-v-6e3d0c01{
 	font-size: 12px;
 	color: #CCCCCC;
 }
+.wxSearch.data-v-6e3d0c01{
+	overflow: hidden;
+}
 .hotList.data-v-6e3d0c01,.historSearch.data-v-6e3d0c01{
 	display: -webkit-box;
 	display: -webkit-flex;

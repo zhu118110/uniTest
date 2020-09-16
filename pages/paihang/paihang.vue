@@ -37,20 +37,19 @@
 			<scroll-view scroll-y="true" class="scroll" 
 				refresher-enabled="true"
 				:refresher-triggered="refresher"
+				
+				:lower-threshold="10"
 				@scrolltolower="scrolltolower"
 				@refresherrefresh="refresherrefresh"
 				>
 				<list :movieData="dataList" :rate="true"></list>
+			
 			</scroll-view>
-			<view class="loading">
-				<u-loading mode="circle" :show="loading">加载中</u-loading>
-				
+			<view class="loading" v-if="loading">
+				<u-loading mode="circle" :show="true">加载中</u-loading>
 			</view>
-			<view>
-				
-			</view>
+			
 		</view>
-		
 		
 	</view>
 </template>
@@ -123,14 +122,15 @@
 						cover:"/static/bd1.jpg"
 					}
 				],
-				tabbarColor:{
-					backgroundColor:"#2a91d5"
-				},
+				// tabbarColor:{
+				// 	backgroundColor:"#2a91d5"
+				// },
 				searchCol:{
 					color:"#fff"
 				},
 				inputStyle:{
-					width:"100%"
+					width:"100%",
+					
 				},
 				refresher:false,
 				loading:false
@@ -140,7 +140,7 @@
 			list
 		},
 		onShow() {
-			this.tabbarColor.backgroundColor=this.$getMainColor().color||"#2a91d5";
+			// this.tabbarColor.backgroundColor=this.$getMainColor().color||"#2a91d5";
 		},
 		computed:{
 			count(){
@@ -156,7 +156,7 @@
 			},
 			// 滚动到底部触发
 			scrolltolower(){
-			
+				console.log("滚动到了底部")
 				this.loading=true;
 				setTimeout(()=>{
 					this.loading=false;
@@ -172,12 +172,21 @@
 				},1000)
 				
 			},
+		},
+		computed:{
+			tabbarColor(){
+				// console.log(this.$store.state.tabColor)
+				return {backgroundColor:this.$store.state.tabColor};
+			}
+		},
+		watch:{
+			
 		}
 		
 	}
 </script>
 
-<style scoped>
+<style scoped lang="less">
 	.container{
 		width: 100%;
 		height: 100%;
@@ -197,6 +206,10 @@
 			align-items: center;
 			justify-content: center;
 			margin-left: 20rpx;
+			overflow: hidden;
+			& .u-search .u-content{
+				
+			}
 		}
 	/* #endif */
 	
@@ -208,7 +221,9 @@
 	}
 	
 	.loading{
+		
 		display: flex;
 		justify-content: center;
+		align-items: center;
 	}
 </style>

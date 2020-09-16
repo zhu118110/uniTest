@@ -3,16 +3,19 @@
 		
 			<!-- <view class="status_bar" :style="{'background-color':tabbarColor}"></view> -->
 			<u-navbar :background="tabbarColor" back-icon-color="#ffffff" :is-fixed="false">
-				<u-search
-					placeholder="输入片名" 
-					height="44" 
-					:action-style="searchCol"
-					:focus="true"
-					v-model="searchMsg"
-					@search="goSearch(searchMsg)"
-					@custom="goSearch(searchMsg)"
-				>
-				</u-search>
+				<view class="wxSearch">
+					<u-search
+						placeholder="输入片名" 
+						height="44" 
+						:action-style="searchCol"
+						:focus="true"
+						v-model="searchMsg"
+						@search="goSearch(searchMsg)"
+						@custom="goSearch(searchMsg)"
+					>
+					</u-search>
+				</view>
+				
 			</u-navbar>
 			<view class="content" v-if="seacrListShow">
 				<view class="title">
@@ -79,9 +82,9 @@
 		data(){
 			return{
 				searchMsg:"",  //搜索字段
-				tabbarColor:{
-					backgroundColor:"#2a91d5"
-				},
+				// tabbarColor:{
+				// 	backgroundColor:"#2a91d5"
+				// },
 				searchCol:{
 					color:"#fff"
 				},
@@ -94,9 +97,9 @@
 		},
 		
 		onShow(){
-			// 从本地获取主题色
-			this.tabbarColor.backgroundColor=this.$getMainColor().color;
-			// 从本地获取历史搜索的数据
+			// // 从本地获取主题色
+			// this.tabbarColor.backgroundColor=this.$getMainColor().color;
+			// // 从本地获取历史搜索的数据
 			this.historySearch=uni.getStorageSync("historySearch")||[];
 			
 		},
@@ -168,7 +171,19 @@
 				})
 			},
 		},
-		
+		computed:{
+			tabbarColor(){
+				// console.log(this.$store.state.tabColor)
+				return {backgroundColor:this.$store.state.tabColor};
+			}
+		},
+		watch:{
+			// 监听页面主题色是否改变
+			"tabbarColor.backgroundColor"(nVal,oVal){
+				this.$changeTabColor(nVal)
+				// console.log(nVal,oVal);
+			}
+		}
 	}
 </script>
 
@@ -195,7 +210,11 @@
 		font-size: 12px;
 		color: #CCCCCC;
 	}
-	
+	/* #ifdef MP-WEIXIN */
+	.wxSearch{
+		overflow: hidden;
+	}
+	/* #endif */
 	.hotList,.historSearch{
 		display: flex;
 		justify-content: space-between;

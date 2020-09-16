@@ -1,7 +1,7 @@
 <!-- 底部固定的评论的输入框 -->
 <template>
 	<view class="container">
-		<view class="footer">
+		<view class="footer" :style="{'bottom':bottom+'px'}">
 			<view class="inp">
 				<u-search 
 					search-icon="order"
@@ -10,6 +10,8 @@
 					action-text="发表"
 					@search="search"
 					@custom="search"
+					:adjustPosition="false"
+					
 					>
 				</u-search>
 			</view>
@@ -24,13 +26,19 @@
 			placeholder:{
 				type:String,
 				default:"输入评论"
+			},
+			bottom:{
+				type:Number,
+				default:0
 			}
 		},
 		data(){
 			return{
-				comment:""
+				comment:"",
+				
 			}
 		},
+		
 		methods:{
 			// 点击发表或者回车将内容传递给父组件
 			search(value){
@@ -48,7 +56,7 @@
 				this.$emit("search",value,Y+M+D);
 				this.comment="";
 				
-			}
+			},
 		}
 	}
 </script>
@@ -58,7 +66,7 @@
 	.footer{
 		width: @width;
 		position: fixed;
-		bottom: 0rpx;
+		
 		height: 44px;
 		border-top: 1rpx solid #f8f8f8;
 		background-color: #fff;

@@ -7,6 +7,8 @@ const store = new Vuex.Store({
 		userInfor:{},
 		isLogin:false,  //是否登录
 		test:1,
+		// 导航栏颜色
+		tabColor:"#2a91d5"
 	},
     mutations: {
 		// 保存小程序登录信息
@@ -27,10 +29,11 @@ const store = new Vuex.Store({
 				key:"userInfor"
 			})
 		},
-		changeTest(state,newTest){
+		// 改变tabbar样式
+		changeTabBar(state,color){
+			state.tabColor=color;
 			
-			state.test+=newTest;
-			console.log(state.test)
+			uni.setStorageSync("styleColor",color);
 		}
 	},
     actions: {}

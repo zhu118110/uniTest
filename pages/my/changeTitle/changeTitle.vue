@@ -41,8 +41,9 @@
 			}
 		},
 		onShow() {
-			this.$getMainColor();
+			this.$changeTabColor(this.$store.state.tabColor);
 		},
+		
 		methods:{
 			/*
 				点击更换主题颜色
@@ -52,14 +53,20 @@
 			*/
 			changeColor(index){
 				
+				// 方案一:同步存储更新后的主题色：
+					// bug:
+				// uni.setStorageSync("styleColor",{index:index,color:this.colorList[index].color});
+				// this.$getMainColor();
 				
-				// 同步存储更新后的主题色
-				uni.setStorageSync("styleColor",{index:index,color:this.colorList[index].color});
-				this.$getMainColor();
+				
+				// 方案二:使用vuex
+				this.$store.commit("changeTabBar",this.colorList[index].color);
+				
+				
 			},
 			
 		},
-		
+
 		
 	}
 </script>

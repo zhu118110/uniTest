@@ -246,7 +246,7 @@
 			// 滑动到底部加载数据
 			scrolltolower(){
 				let _this=this;
-				console.log(_this.loadNum)
+				
 				if(_this.loadNum>=5){
 					_this.noData=true;
 					return false

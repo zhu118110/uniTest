@@ -107,9 +107,7 @@
 			</view>
 		</view>
 		
-		<view @click="change">
-			{{ count }}
-		</view>
+		
 		<!-- 遮罩层,小程序用户登录时显示loading动画 -->
 		<!-- #ifdef MP-WEIXIN -->
 		<u-mask :show="maskShow" :custom-style="{background: 'rgba(255, 255, 255, 0.5)'}">
@@ -140,7 +138,7 @@
 					icon:"icon-yunliankeji_gongyinglianfuben",
 					text:"设置"
 				}],
-				tabbarColor:"#2a91d5",  //主题颜色
+				// tabbarColor:"#2a91d5",  //主题颜色
 				userInfor:{},  //小程序端用户信息
 				
 				maskShow:false
@@ -151,7 +149,14 @@
 		},
 		// 页面显示时监听 “更改主题” 页面事件，动态改变底部tabbar颜色
 		onShow() {
-			this.tabbarColor=this.$getMainColor().color;
+			// this.tabbarColor=this.$getMainColor().color;
+			let mainColor=uni.getStorageSync("styleColor");
+			if(mainColor){
+				uni.setTabBarStyle({
+					selectedColor:mainColor,
+				});
+			}
+			
 			
 			let userInfor=uni.getStorageSync("userInfor");
 			if(userInfor){
@@ -266,16 +271,22 @@
 				})
 			},
 			// #endif
-			
-			change(){
-				let i=1;
-				this.$store.commit("changeTest",i++)
-			},
-			...mapMutations(["login","changeTest"])
+			...mapMutations(["login"])
 		},
 		computed:{
-			count(){
-				return this.$store.state.test
+			tabbarColor(){
+				// console.log(this.$store.state.tabColor)
+				return this.$store.state.tabColor;
+			}
+		},
+		watch:{
+			// 监听页面主题色是否改变
+			tabbarColor(nVal,oVal){
+				// 改变导航条颜色
+				uni.setNavigationBarColor({
+					frontColor:"#ffffff",
+					backgroundColor:nVal,
+				})
 			}
 		}
 	}

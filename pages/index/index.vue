@@ -83,13 +83,14 @@
 	import dongman from "./indexModule/dongman.vue"
 	import zongyi from "./indexModule/zongyi.vue"
 	import uniSegmentedControl from "@/components/uni-segmented-control/uni-segmented-control.vue"
+	import {mapMutations} from "vuex"
 	export default {
 		data() {
 			return {
 				currentComponent:"jingxuan",//默认当前页面加载的组件         
-				tabbarColor:{
-					backgroundColor:"#2a91d5"
-				},
+				// tabbarColor:{
+				// 	backgroundColor:"#2a91d5"
+				// },
 				scrollTitle:[{
 					id:"jx",
 					title:"精选",
@@ -120,16 +121,34 @@
 			jingxuan,juji,dianying,dongman,zongyi,
 			uniSegmentedControl
 		},
+		onLoad() {
+			//  应用刚进来时从本地获取主题颜色
+			let mainColor=uni.getStorageSync("styleColor");
+			if(mainColor){
+				this.changeTabBar(mainColor)
+				uni.setTabBarStyle({
+					selectedColor:mainColor,
+					fail(err) {
+						console.log(err)
+					}
+				});
+				uni.setNavigationBarColor({
+					frontColor:"#ffffff",
+					backgroundColor:mainColor,
+				})
+			}
+		},
 		onShow(){
 			
 			// 从本地获取主题色
-			this.tabbarColor.backgroundColor=this.$getMainColor().color||"#2a91d5";
+			// this.tabbarColor.backgroundColor=this.$getMainColor().color||"#2a91d5";
 			
 		},
 		onReady() {
 			// this.getPageHeight();
 		},
 		methods: {
+			...mapMutations(['login',"changeTabBar"]),
 			onClickItem(e) {
 				if (this.scroll_index !== e.currentIndex) {
 					this.scroll_index = e.currentIndex;
@@ -174,9 +193,19 @@
 				}).exec();
 			}
 		},
-		watch:{
-			
-		}
+		computed:{
+			tabbarColor(){
+				// console.log(this.$store.state.tabColor)
+				return {backgroundColor:this.$store.state.tabColor};
+			}
+		},
+		// watch:{
+		// 	// 监听页面主题色是否改变
+		// 	"tabbarColor.backgroundColor"(nVal,oVal){
+		// 		this.$changeTabColor(nVal)
+		// 		// console.log(nVal,oVal);
+		// 	}
+		// }
 	}
 </script>
 

@@ -53,8 +53,20 @@ _vue.default.prototype.$hhtpGet = function (params) {
       } }));
 
   });
-},
+};
 
+// 改变主题色
+_vue.default.prototype.$changeTabColor = function (color) {
+
+  // uni.setTabBarStyle({
+  // 	selectedColor:color,
+  // });
+  // 改变顶部导航条颜色
+  uni.setNavigationBarColor({
+    frontColor: "#ffffff",
+    backgroundColor: color });
+
+};
 
 
 _App.default.mpType = 'app';
@@ -147,16 +159,22 @@ var _vuex = __webpack_require__(/*! vuex */ 8);function ownKeys(object, enumerab
       } });
 
 
-
   },
   onShow: function onShow() {
-    // console.log('App Show')
+
+
   },
   onHide: function onHide() {
     // console.log('App Hide')
   },
   methods: _objectSpread({},
-  (0, _vuex.mapMutations)(['login'])) };exports.default = _default;
+
+  (0, _vuex.mapMutations)(['login', "changeTabBar"])),
+
+  computed: {},
+
+
+  watch: {} };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

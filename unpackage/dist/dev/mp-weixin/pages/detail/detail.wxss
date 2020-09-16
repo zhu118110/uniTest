@@ -33,26 +33,16 @@ view.data-v-3e159eb4 {
   width: 50px;
   height: 50px;
   background-color: rgba(0, 0, 0, 0.5);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
   margin: 0 auto;
   -webkit-transform: translate(0, 150%);
           transform: translate(0, 150%);
   border-radius: 50%;
-}
-.video-cover-view cover-view.data-v-3e159eb4 {
   font-size: 14px;
   color: #fff;
+  text-align: center;
+  line-height: 50px;
 }
 .fullScreenView.data-v-3e159eb4 {
-  height: 275px;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -66,8 +56,6 @@ view.data-v-3e159eb4 {
   color: #eee;
   right: 1%;
   z-index: 20000;
-}
-.fullScreenView cover-view.data-v-3e159eb4 {
   padding: 5px 10px;
   font-size: 14px;
   background-color: rgba(0, 0, 0, 0.4);

@@ -29,6 +29,7 @@
 				:placeholder-style="`color: ${placeholderColor}`"
 				class="u-input"
 				type="text"
+				:adjust-position="adjustPosition"
 				:style="[{
 					textAlign: inputAlign,
 					color: color,
@@ -190,7 +191,11 @@ export default {
 		searchIcon: {
 			type: String,
 			default: 'search'
-		}
+		},
+		adjustPosition: {
+			type: Boolean,
+			default: true
+		},
 	},
 	data() {
 		return {
